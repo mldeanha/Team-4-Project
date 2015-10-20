@@ -21,11 +21,12 @@ public class Client {
 	 * 
 	 * @param args
 	 */
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		
 				String ip = JOptionPane.showInputDialog("Please enter server IP");
 
-				int port = 1380;
+				int port = 7776;
 				Socket socket;
 
 				try {

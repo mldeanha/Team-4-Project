@@ -10,6 +10,7 @@
  */
 
 import java.net.Socket;
+import java.util.Scanner;
 
 public class UserThread extends Thread {
 	//Holds the reference to the game so the user can submit moves
@@ -24,15 +25,39 @@ public class UserThread extends Thread {
 	 * @param game
 	 */
 	public UserThread(Socket client, GameLogic game){
-		System.out.println("Connected! Running Thread");
-	}
+		this.clientSocket = client;
+		this.userGame = game;
+		
+		System.out.println("Client " + clientSocket.getInetAddress() + " connected");	}
 	
 	/**
 	 * This method is used to send data to and from the
 	 * client in order to play the sudoku game
 	 */
 	public void run(){
-		
+		try {
+
+			Scanner scanner = new Scanner(clientSocket.getInputStream());
+
+
+			while (true) {
+				
+
+				String line = scanner.nextLine();
+
+				String[] split = line.split(" ");	//Split by spaces
+
+				try {
+					//add GUI interactions here
+					
+				} catch (Exception e) {
+					System.err.println("Client " + clientSocket.getInetAddress() + " issued an incorrect command: " + line);
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println("User disconnected");
+		}
 	}
 	
 }
