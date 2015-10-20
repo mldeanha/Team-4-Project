@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 /**
  * This class file will accept clients trying to connect to the 
  * sudoku game it will then make a new thread for the client user
@@ -15,8 +19,32 @@ public class SudokuPlusServer {
 	 * 
 	 * @param args
 	 */
+	@SuppressWarnings("resource")
 	public static void main(String[] args){
+		GameLogic game = new GameLogic();
 		
+		int port = 1380;
+		ServerSocket serverSocket;
+		
+		try {
+			serverSocket = new ServerSocket(port);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;	
+		}
+		
+		while (true) {
+			try {
+				Socket clientSocket = serverSocket.accept();
+
+				Thread customThread = new UserThread(clientSocket, game);
+				
+				customThread.start();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	

@@ -1,6 +1,6 @@
 /**
  * This class file will create a socket and connect to the server based on user
- * input of an ip address. Then it will create a GUI and pass it the socket and
+ * input of an ip address. Then it will create a GameGUI and pass it the socket and
  * possibly the sudoku puzzle
  * 
  * @author Eric Celerin
@@ -13,16 +13,42 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
-
 public class Client {
 	/**
 	 * This is the main method for the client side of the SudokuPlus game application.
-	 * It will setup the GUI and connection to the server. It will also create a socket
+	 * It will setup the GameGUI and connection to the server. It will also create a socket
 	 * that the GUI can use to connect to the server.
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
+				String ip = JOptionPane.showInputDialog("Please enter server IP");
+
+				int port = 1380;
+				Socket socket;
+
+				try {
+					socket = new Socket(ip, port);
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,"Failed to connect to server");
+					return;
+				}
+
+				PrintWriter socketWriter;
+				try {
+					socketWriter = new PrintWriter(socket.getOutputStream());
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(null, "Failed to attach printwriter to socket!");
+					e.printStackTrace();
+					return;
+				}
+				
+				//Ask for a puzzle to do
+				
+				
+				
+				//new GameGUI(socketWriter);
 	}
 }

@@ -11,7 +11,7 @@
 
 import java.net.Socket;
 
-public class UserThread {
+public class UserThread extends Thread {
 	//Holds the reference to the game so the user can submit moves
 	private GameLogic userGame;
 	//Holds the client socket information
@@ -24,7 +24,7 @@ public class UserThread {
 	 * @param game
 	 */
 	public UserThread(Socket client, GameLogic game){
-		
+		System.out.println("Connected! Running Thread");
 	}
 	
 	/**
