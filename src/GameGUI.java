@@ -18,12 +18,17 @@ public class GameGUI extends JFrame implements ActionListener{
 	//Base frame
 	private JFrame frame;
 	private JLabel label1;
+	private JPanel panel;
+	private JPanel play;
 	
 	//MenuBar items
 	private JMenuBar menuBar;
 	private JMenu menu;
 	private JMenuItem menuItem;
 	
+	//Etc
+	private int buttonID;
+
 	/**
 	 * Constructor class for GameGUI
 	 */
@@ -46,10 +51,25 @@ public class GameGUI extends JFrame implements ActionListener{
 				"Displays information about this program");
 		menu.add(menuItem);
 		
+		//Build Panels
+		panel = new JPanel(new GridLayout(2,1));
+		panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		play = new JPanel(new GridLayout(9,9));
+		buttonID = 1;
+		while(buttonID <= 81){
+			play.add(new JButton("" + buttonID));
+			buttonID++;
+		}
+		play.setVisible(true);
+		
+		panel.add(play);
+		panel.setOpaque(false);
+		panel.setVisible(true);
+		
 		//Finish JFrame
-		label1 = new JLabel("Haha, a label");
-		frame.getContentPane().add(label1, BorderLayout.CENTER);
 		frame.setJMenuBar(menuBar);
+		frame.add(panel);
 	}
 
 	/**
