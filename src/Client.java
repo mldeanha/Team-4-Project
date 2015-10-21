@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
+
 import javax.swing.JOptionPane;
 
 public class Client {
@@ -47,9 +49,22 @@ public class Client {
 				}
 				
 				//Ask for a puzzle to do
-				
-				
-				
+				System.out.println("Fun");
+				Scanner scanner = null;
+				try {
+					System.out.println("Fun");
+
+					scanner = new Scanner(socket.getInputStream());
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				while(true){
+				String line = scanner.nextLine();
+					System.out.println(line);
+					System.out.println(scanner.nextLine());
+				}
 				//new GameGUI(socketWriter);
 	}
 }
