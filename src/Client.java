@@ -50,6 +50,7 @@ public class Client {
 				
 				//Ask for a puzzle to do
 				System.out.println("Fun");
+				socketWriter.print("TESTINNG");
 				Scanner scanner = null;
 				try {
 					System.out.println("Fun");
@@ -60,7 +61,7 @@ public class Client {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				socketWriter.print(s);
+				
 				while(true){
 				String line = scanner.nextLine();
 					System.out.println(line);
