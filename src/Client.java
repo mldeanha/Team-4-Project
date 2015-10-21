@@ -60,6 +60,7 @@ public class Client {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				socketWriter.print(s);
 				while(true){
 				String line = scanner.nextLine();
 					System.out.println(line);
