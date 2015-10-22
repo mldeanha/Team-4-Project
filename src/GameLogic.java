@@ -143,7 +143,8 @@ public class GameLogic {
 	 * This method is pretty straight forward. The parameter
 	 * will come from the user and set the global variable to the desired difficulty.
 	 * 
-	 * @param difficulty - this will be an integer that comes from the GUI.
+	 * @param difficulty - this will be an integer that comes from the GUI that will select the
+	 * difficulty.
 	 * 
 	 * POSSIBLE OPTIONS:
 	 * 1 - Easy
