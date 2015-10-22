@@ -38,7 +38,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame = new JFrame("SudokuPlus");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
-		frame.setVisible(true);
+		frame.setLayout(new SpringLayout());
 		
 		//Build Menu
 		menuBar = new JMenuBar();
@@ -52,24 +52,36 @@ public class GameGUI extends JFrame implements ActionListener{
 		menu.add(menuItem);
 		
 		//Build Panels
-		panel = new JPanel(new GridLayout(2,1));
+		panel = new JPanel(new GridLayout(1,1));
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		play = new JPanel(new GridLayout(9,9));
+		play.setSize(400, 400);
+		panel.setSize(400, 400);
 		buttonID = 1;
 		while(buttonID <= 81){
-			play.add(new JButton("" + buttonID));
+			JButton current = new JButton("" + buttonID){
+		        {
+		            setSize(150, 75);
+		            setMaximumSize(getSize());
+		            setMinimumSize(getSize());
+		        }
+		    };
+			current.setSize(10, 10);
+			play.add(current);
 			buttonID++;
 		}
 		play.setVisible(true);
 		
 		panel.add(play);
 		panel.setOpaque(false);
-		panel.setVisible(true);
+		panel.setVisible(true);		
 		
 		//Finish JFrame
 		frame.setJMenuBar(menuBar);
 		frame.add(panel);
+		frame.setVisible(true);
+
 	}
 
 	/**
