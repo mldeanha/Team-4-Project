@@ -60,14 +60,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		panel.setSize(400, 400);
 		buttonID = 1;
 		while(buttonID <= 81){
-			JButton current = new JButton("" + buttonID){
-		        {
-		            setSize(150, 75);
-		            setMaximumSize(getSize());
-		            setMinimumSize(getSize());
-		        }
-		    };
-			current.setSize(10, 10);
+			JButton current = new JButton("" + buttonID);
 			play.add(current);
 			buttonID++;
 		}
