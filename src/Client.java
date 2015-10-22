@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
+
 import javax.swing.JOptionPane;
 
 public class Client {
@@ -21,11 +23,12 @@ public class Client {
 	 * 
 	 * @param args
 	 */
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		
 				String ip = JOptionPane.showInputDialog("Please enter server IP");
 
-				int port = 1380;
+				int port = 7776;
 				Socket socket;
 
 				try {
@@ -46,9 +49,24 @@ public class Client {
 				}
 				
 				//Ask for a puzzle to do
+				System.out.println("Fun");
+				socketWriter.print("TESTINNG");
+				Scanner scanner = null;
+				try {
+					System.out.println("Fun");
+
+					scanner = new Scanner(socket.getInputStream());
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
-				
-				
+				while(true){
+				String line = scanner.nextLine();
+					System.out.println(line);
+					System.out.println(scanner.nextLine());
+				}
 				//new GameGUI(socketWriter);
 	}
 }
