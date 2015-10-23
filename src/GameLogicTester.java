@@ -6,7 +6,8 @@ public class GameLogicTester {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		GameLogic
 	}
+	
 
 }
