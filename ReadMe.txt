@@ -30,7 +30,7 @@ If you run SudokuPlusServer.java, it will run a server in the background that wi
 
 If you run UserThread.java, it will run in the background, but it will assign a thread to a user and that's the link between the server and the GUI.
 
---------------------------------------------------
+-------------------------------------------------
 
 
 
