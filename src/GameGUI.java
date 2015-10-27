@@ -64,7 +64,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		panel.setSize(400, 600);
 		for(int i = 0; i < 9; i++){
 			for(int k = 0; k < 9; k++){
-				JButton current = new JButton((i + 1) + ", " + (k + 1));
+				SButton current = new SButton((i + 1) + ", " + (k + 1));
 				play.add(current);
 			}
 		}
