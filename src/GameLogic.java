@@ -27,114 +27,123 @@ public class GameLogic {
 	//Integer (1,2 or 3) that sets the difficulty of the puzzle.
 	static int difficulty;
 
-	//MAIN METHOD
-	public static void main(String[] args)
-	{
-
-		//JUST FOR TESTING. THERE WILL NOT BE A MAIN METHOD IN FUTURE VERSIONS
-		GameLogic tester = new GameLogic();
-		int[] guess = {8,5,6};
-		int[] guess2 = {4,8,8};
-		int[] guess3 = {4,0,2};
-		tester.setDifficulty(3);
-
-		try {
-			tester.readPuzzle();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		//PRINTS OUT CURRENT PUZZLE
-		System.out.println("THE PUZZLE THE USER WILL WORK ON: ");
-		for(int i=0;i<9;i++){
-			for(int j=0;j<9;j++){
-				System.out.print(currentPuzzle[i][j]);
-			}
-			System.out.println();
-		}
-
-		//PRINTS A LINE
-		System.out.println();
-
-		//PRINTS OUT THE COORESPONDING SOLUTION
-		System.out.println("THE SOLUTION TO THE PUZZLE THE USER WILL WORK ON: ");
-		for(int i=0;i<9;i++){
-			for(int j=0;j<9;j++){
-				System.out.print(currentPuzzleSolution[i][j]);
-			}
-			System.out.println();
-		}
-
-		//PRINTS A LINE
-		System.out.println();
-
-		//TO CHECK THESE INPUTS YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!!
-		//GUESS 1
-		System.out.println("YOURE GUESSING THE NUMBER " + guess[0] + " IS AT: [" + guess[1] + "," + guess[2] + "]");
-		System.out.println(tester.checkInput(guess));
-		System.out.println();
-		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!
-		//GUESS 2
-		System.out.println("YOURE GUESSING THE NUMBER " + guess2[0] + " IS AT: [" + guess2[1] + "," + guess2[2] + "]");
-		System.out.println(tester.checkInput(guess2));
-		System.out.println();
-		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!
-		//GUESS 3
-		System.out.println("YOURE GUESSING THE NUMBER " + guess3[0] + " IS AT: [" + guess3[1] + "," + guess3[2] + "]");
-		System.out.println(tester.checkInput(guess3));
-	}
-
-	/**
-	 * WORKING AS OF 10/22/15
-	 * 
-	 * This method is going to spit back whether or not the user has made a correct guess or an
-	 * incorrect guess in real time while they are playing the game.
-	 * 
-	 * It takes in a paramter (array) and pulls out the guess vaklue and the coordinates
-	 * and cross-references that information with currentPuzzleSolution.
-	 * 
-	 * Assuming the user made a correct guess, the method will return "true".
-	 * Assuming the user made an incorrect guess, the method will return "false".
-	 * 
-	 * @param userGuess - This will be a 3 element array that will contain the following information:
-	 * userGuess[0] = the users' "guess"
-	 * userGuess[1] = the users' guess y-coordinate
-	 * userGuess[2] = the users' guess x-coordinate
-	 * 
-	 * @return a boolean that will represent the accuracy of the users' guess.
-	 */
-	public boolean checkInput(int [] userGuess){
-
-		boolean guess = false;
-
-		int input = userGuess[0];
-		int guessY = userGuess[1];
-		int guessX = userGuess[2];
-
-		//Pulls out the number (in the form of a string) and converts it to an int
-		String correctNumber = currentPuzzleSolution[guessX][guessY];
-		int convertedNumber = Integer.parseInt(correctNumber);
-
-		//Checks if the guess was correct
-		if(convertedNumber == input){
-			guess = true;
-		}
-
-		//Returns true or false based off of guess accuracy
-		return guess;
-	}
+//	//MAIN METHOD
+//	public static void main(String[] args)
+//	{
+//
+//		//JUST FOR TESTING. THERE WILL NOT BE A MAIN METHOD IN FUTURE VERSIONS
+//		GameLogic tester = new GameLogic();
+//		int[] guess = {8,5,6};
+//		int[] guess2 = {4,8,8};
+//		int[] guess3 = {4,0,2};
+//		tester.setDifficulty(3);
+//
+//		try {
+//			tester.readPuzzle();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//
+//		//PRINTS OUT CURRENT PUZZLE
+//		System.out.println("THE PUZZLE THE USER WILL WORK ON: ");
+//		for(int i=0;i<9;i++){
+//			for(int j=0;j<9;j++){
+//				System.out.print(currentPuzzle[i][j]);
+//			}
+//			System.out.println();
+//		}
+//
+//		//PRINTS A LINE
+//		System.out.println();
+//
+//		//PRINTS OUT THE COORESPONDING SOLUTION
+//		System.out.println("THE SOLUTION TO THE PUZZLE THE USER WILL WORK ON: ");
+//		for(int i=0;i<9;i++){
+//			for(int j=0;j<9;j++){
+//				System.out.print(currentPuzzleSolution[i][j]);
+//			}
+//			System.out.println();
+//		}
+//
+//		//PRINTS A LINE
+//		System.out.println();
+//
+//		//TO CHECK THESE INPUTS YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!!
+//		//GUESS 1
+//		System.out.println("YOURE GUESSING THE NUMBER " + guess[0] + " IS AT: [" + guess[1] + "," + guess[2] + "]");
+//		System.out.println(tester.checkInput(guess));
+//		System.out.println();
+//		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!
+//		//GUESS 2
+//		System.out.println("YOURE GUESSING THE NUMBER " + guess2[0] + " IS AT: [" + guess2[1] + "," + guess2[2] + "]");
+//		System.out.println(tester.checkInput(guess2));
+//		System.out.println();
+//		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!
+//		//GUESS 3
+//		System.out.println("YOURE GUESSING THE NUMBER " + guess3[0] + " IS AT: [" + guess3[1] + "," + guess3[2] + "]");
+//		System.out.println(tester.checkInput(guess3));
+//	}
+//
+//	/**
+//	 * WORKING AS OF 10/22/15
+//	 * 
+//	 * This method is going to spit back whether or not the user has made a correct guess or an
+//	 * incorrect guess in real time while they are playing the game.
+//	 * 
+//	 * It takes in a paramter (array) and pulls out the guess vaklue and the coordinates
+//	 * and cross-references that information with currentPuzzleSolution.
+//	 * 
+//	 * Assuming the user made a correct guess, the method will return "true".
+//	 * Assuming the user made an incorrect guess, the method will return "false".
+//	 * 
+//	 * @param userGuess - This will be a 3 element array that will contain the following information:
+//	 * userGuess[0] = the users' "guess"
+//	 * userGuess[1] = the users' guess y-coordinate
+//	 * userGuess[2] = the users' guess x-coordinate
+//	 * 
+//	 * @return a boolean that will represent the accuracy of the users' guess.
+//	 */
+//	public boolean checkInput(int [] userGuess){
+//
+//		boolean guess = false;
+//
+//		int input = userGuess[0];
+//		int guessY = userGuess[1];
+//		int guessX = userGuess[2];
+//
+//		//Pulls out the number (in the form of a string) and converts it to an int
+//		String correctNumber = currentPuzzleSolution[guessX][guessY];
+//		int convertedNumber = Integer.parseInt(correctNumber);
+//
+//		//Checks if the guess was correct
+//		if(convertedNumber == input){
+//			guess = true;
+//		}
+//
+//		//Returns true or false based off of guess accuracy
+//		return guess;
+//	}
 
 	/**
 	 * WORKING AS OF 10/22/15
 	 * 
 	 * This method is straight forward. It will be used to get the current puzzle.
-	 * 
-	 * QUESTION: currentPuzzle is already global so is this required???????
 	 *
 	 * @return the current puzzle that the user will work on.
 	 */
 	public String[][] getPuzzle(){
 		return currentPuzzle;
+	}
+	
+	/**
+	 * WORKING AS OF 10/27/15
+	 * 
+	 *  This method is straight forward. It wil lbe use to get the solution to the current puzzle.
+	 * 
+	 * @return the array storing the current puzzle's solution.
+	 */
+	public String[][] getPuzzleSolution(){
+		return currentPuzzleSolution;
 	}
 
 	/**
@@ -162,6 +171,19 @@ public class GameLogic {
 			System.out.println("INCORRECT INPUT. INPUT MUST BE 1 (EASY), 2 (MEDIUM), OR 3 (HARD)!");
 		}
 
+	}
+	
+	/**
+	 * WORKING AS OF 10/27/15
+	 * 
+	 * This method just returns the difficulty int.
+	 * 
+	 * Will be used MAINLY for testing purposes.
+	 * 
+	 * @return the integer that is storing the desired difficulty.
+	 */
+	public int getDifficulty(){
+		return difficulty;
 	}
 
 	/**
