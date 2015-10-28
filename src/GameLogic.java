@@ -84,45 +84,45 @@ public class GameLogic {
 //		System.out.println(tester.checkInput(guess3));
 //	}
 //
-//	/**
-//	 * WORKING AS OF 10/22/15
-//	 * 
-//	 * This method is going to spit back whether or not the user has made a correct guess or an
-//	 * incorrect guess in real time while they are playing the game.
-//	 * 
-//	 * It takes in a paramter (array) and pulls out the guess vaklue and the coordinates
-//	 * and cross-references that information with currentPuzzleSolution.
-//	 * 
-//	 * Assuming the user made a correct guess, the method will return "true".
-//	 * Assuming the user made an incorrect guess, the method will return "false".
-//	 * 
-//	 * @param userGuess - This will be a 3 element array that will contain the following information:
-//	 * userGuess[0] = the users' "guess"
-//	 * userGuess[1] = the users' guess y-coordinate
-//	 * userGuess[2] = the users' guess x-coordinate
-//	 * 
-//	 * @return a boolean that will represent the accuracy of the users' guess.
-//	 */
-//	public boolean checkInput(int [] userGuess){
-//
-//		boolean guess = false;
-//
-//		int input = userGuess[0];
-//		int guessY = userGuess[1];
-//		int guessX = userGuess[2];
-//
-//		//Pulls out the number (in the form of a string) and converts it to an int
-//		String correctNumber = currentPuzzleSolution[guessX][guessY];
-//		int convertedNumber = Integer.parseInt(correctNumber);
-//
-//		//Checks if the guess was correct
-//		if(convertedNumber == input){
-//			guess = true;
-//		}
-//
-//		//Returns true or false based off of guess accuracy
-//		return guess;
-//	}
+	/**
+	 * WORKING AS OF 10/22/15
+	 * 
+	 * This method is going to spit back whether or not the user has made a correct guess or an
+	 * incorrect guess in real time while they are playing the game.
+	 * 
+	 * It takes in a paramter (array) and pulls out the guess vaklue and the coordinates
+	 * and cross-references that information with currentPuzzleSolution.
+	 * 
+	 * Assuming the user made a correct guess, the method will return "true".
+	 * Assuming the user made an incorrect guess, the method will return "false".
+	 * 
+	 * @param userGuess - This will be a 3 element array that will contain the following information:
+	 * userGuess[0] = the users' "guess"
+	 * userGuess[1] = the users' guess y-coordinate
+	 * userGuess[2] = the users' guess x-coordinate
+	 * 
+	 * @return a boolean that will represent the accuracy of the users' guess.
+	 */
+	public boolean checkInput(int [] userGuess){
+
+		boolean guess = false;
+
+		int input = userGuess[1];
+		int guessY = userGuess[2];
+		int guessX = userGuess[3];
+
+		//Pulls out the number (in the form of a string) and converts it to an int
+		String correctNumber = currentPuzzleSolution[guessX][guessY];
+		int convertedNumber = Integer.parseInt(correctNumber);
+
+		//Checks if the guess was correct
+		if(convertedNumber == input){
+			guess = true;
+		}
+
+		//Returns true or false based off of guess accuracy
+		return guess;
+	}
 
 	/**
 	 * WORKING AS OF 10/22/15

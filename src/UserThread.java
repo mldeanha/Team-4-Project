@@ -11,6 +11,7 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -58,11 +59,17 @@ public class UserThread extends Thread {
 
 				//Format for input: "Command,Input,Input,Input...
 				String[] split = line.split(",");
-
+				int [] input = new int[split.length];
+				int i = 0;
+				for(String convert : split){
+					input[i] = Integer.parseInt(convert);
+					i++;
+				}
 				//Command directory: This is what will convert actions in the GUI
 				//into game changes and server interactions
-				switch(Integer.parseInt(split[0])){
+				switch(input[0]){
 				case 0:
+					userGame.checkInput(input);
 					break;
 				case 1:
 					break;
@@ -71,18 +78,18 @@ public class UserThread extends Thread {
 				}
 				
 
-				try {//Move this to separate thread
-					//add GUI interactions here
-					//Game to GUI send home the puzzles
-					socketWriter.println("Command");
-					socketWriter.flush();
-					socketWriter.println(userGame.getPuzzle());
-					socketWriter.flush();
-					
-					
-				} catch (Exception e) {
-					System.err.println("Client " + clientSocket.getInetAddress() + " issued an incorrect command: ERR" );
-				}
+//				try {//Move this to separate thread
+//					//add GUI interactions here
+//					//Game to GUI send home the puzzles
+//					socketWriter.println("Command");
+//					socketWriter.flush();
+//					socketWriter.println(userGame.getPuzzle());
+//					socketWriter.flush();
+//					
+//					
+//				} catch (Exception e) {
+//					System.err.println("Client " + clientSocket.getInetAddress() + " issued an incorrect command: ERR" );
+//				}
 			}
 			
 		} catch (Exception e) {
