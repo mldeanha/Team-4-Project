@@ -1,3 +1,6 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 
 /**
@@ -6,7 +9,7 @@ import javax.swing.JButton;
  * 
  * @author Matt
  */
-public class SButton extends JButton{
+public class SButton extends JButton implements ActionListener{
 
 	int xCoord;
 	int yCoord;
@@ -19,6 +22,10 @@ public class SButton extends JButton{
 	 */
 	public SButton(String string) {
 		this.setText(string);
+		xCoord = 0;
+		yCoord = 0;
+		value = 0;
+		displayValue = 0;
 	}
 
 	/**
@@ -26,7 +33,7 @@ public class SButton extends JButton{
 	 * @param x
 	 * @param y
 	 */
-	private void setCoords(int x, int y){
+	public void setCoords(int x, int y){
 		xCoord = x;
 		yCoord = y;
 	}
@@ -35,7 +42,7 @@ public class SButton extends JButton{
 	 * Get the button's x coordinate.
 	 * @return int xCoord
 	 */
-	private int getXCoord(){
+	public int getXCoord(){
 		return xCoord;
 	}
 	
@@ -43,7 +50,7 @@ public class SButton extends JButton{
 	 * Get the button's y coordinate.
 	 * @return int yCoord
 	 */
-	private int getYCoord(){
+	public int getYCoord(){
 		return yCoord;
 	}
 	
@@ -51,7 +58,7 @@ public class SButton extends JButton{
 	 * Set the button's true value.
 	 * @param v
 	 */
-	private void setValue(int v){
+	public void setValue(int v){
 		value = v;
 	}
 	
@@ -59,7 +66,7 @@ public class SButton extends JButton{
 	 * Get the button's true value.
 	 * @return int value
 	 */
-	private int getValue(){
+	public int getValue(){
 		return value;
 	}
 	
@@ -67,7 +74,7 @@ public class SButton extends JButton{
 	 * Set the button's displaying value.
 	 * @param v
 	 */
-	private void setDisplayValue(int v){
+	public void setDisplayValue(int v){
 		displayValue = v;
 		this.setText("" + displayValue);
 	}
@@ -76,7 +83,7 @@ public class SButton extends JButton{
 	 * Get the button's displaying value.
 	 * @return int displayValue
 	 */
-	private int getDisplayValue(){
+	public int getDisplayValue(){
 		return displayValue;
 	}
 	
@@ -85,8 +92,14 @@ public class SButton extends JButton{
 	 * are equal. False otherwise.
 	 * @return boolean
 	 */
-	private boolean valueAndDisplayEqual(){
+	public boolean valueAndDisplayEqual(){
 		if( value == displayValue ) return true;
 		return false;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.out.println(xCoord + ", " + yCoord);
+		
 	}
 }
