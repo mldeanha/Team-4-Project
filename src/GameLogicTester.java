@@ -33,7 +33,6 @@ public class GameLogicTester {
 			test.setDifficulty(desiredDifficulty);
 			test.readPuzzle();
 
-			String[][] testPuzzle = test.getPuzzleSolution();
 			String[][] testPuzzleSolution = test.getPuzzleSolution();
 
 			String correctAnswer = testPuzzleSolution[randomY][randomX];
