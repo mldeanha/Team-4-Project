@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import javax.swing.*;
 
@@ -66,10 +67,14 @@ public class GameGUI extends JFrame implements ActionListener{
 		play = new JPanel(new GridLayout(9,9));
 		play.setSize(400, 400);
 		panel.setSize(400, 600);
+		buttons = new SButton[9][9];
 		for(int i = 0; i < 9; i++){
 			for(int k = 0; k < 9; k++){
-				SButton current = new SButton((i + 1) + ", " + (k + 1));
+				SButton current = new SButton((i) + ", " + (k));
 				play.add(current);
+				buttons[i][k] = current;
+				current.setCoords(i, k);
+				current.addActionListener(current);
 			}
 		}
 		play.setVisible(true);
@@ -108,8 +113,7 @@ public class GameGUI extends JFrame implements ActionListener{
 	 * @param arg0
 	 */
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {
 
 	}
 	
@@ -123,7 +127,7 @@ public class GameGUI extends JFrame implements ActionListener{
 	 * Main method for running GUI
 	 */
 	public static void main(String args[]){
-		String temp = new String();
+		String temp = "Project Assets/tester.txt";
 		PrintWriter tempWriter = null;
 		try {
 			tempWriter = new PrintWriter(temp);
