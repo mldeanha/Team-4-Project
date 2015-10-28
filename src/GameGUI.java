@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 import javax.swing.*;
@@ -30,13 +31,16 @@ public class GameGUI extends JFrame implements ActionListener{
 	private JMenuItem menuItem;
 
 	//Etc
+	private PrintWriter writer;
 	private JButton [][] buttons;
 
 	/**
 	 * Constructor class for GameGUI
 	 */
-	public GameGUI(/*PrintWriter writer*/){
+	public GameGUI(PrintWriter writer){
 
+		this.writer = writer;
+		
 		//Build Jframe
 		frame = new JFrame("SudokuPlus");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,12 +112,27 @@ public class GameGUI extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 
 	}
+	
+	//Temporary command setup
+	//Format for Commands: "Command,input,input..."
+	public void sendCommand(){
+		
+	}
 
 	/**
 	 * Main method for running GUI
 	 */
 	public static void main(String args[]){
-		new GameGUI();
+		String temp = new String();
+		PrintWriter tempWriter = null;
+		try {
+			tempWriter = new PrintWriter(temp);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		new GameGUI(tempWriter);
 	}
 }
 

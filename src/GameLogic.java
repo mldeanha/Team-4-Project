@@ -131,8 +131,15 @@ public class GameLogic {
 	 *
 	 * @return the current puzzle that the user will work on.
 	 */
-	public String[][] getPuzzle(){
-		return currentPuzzle;
+	public String getPuzzle(){
+		String singleString = "";
+		for(String[] level:currentPuzzle){
+			for(String add:level){
+				singleString = singleString + add;
+			}
+			singleString = singleString + "\n";
+		}
+		return singleString;
 	}
 	
 	/**
