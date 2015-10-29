@@ -33,7 +33,7 @@ public class GameGUI extends JFrame implements ActionListener{
 
 	//Etc
 	private PrintWriter writer;
-	private JButton [][] buttons;
+	private SButton [][] buttons;
 
 	/**
 	 * Constructor class for GameGUI
@@ -74,7 +74,7 @@ public class GameGUI extends JFrame implements ActionListener{
 				play.add(current);
 				buttons[i][k] = current;
 				current.setCoords(i, k);
-				current.addActionListener(current);
+				current.addActionListener(this);
 			}
 		}
 		play.setVisible(true);
@@ -85,6 +85,8 @@ public class GameGUI extends JFrame implements ActionListener{
 		for(int i = 0; i < 9; i++){
 			JButton current = new JButton("" + (i + 1));
 			pick.add(current);
+			current.addActionListener(this);
+
 		}
 		pick.setVisible(true);
 
@@ -114,6 +116,19 @@ public class GameGUI extends JFrame implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == menu){
+			
+			
+			return;
+		}
+		
+		for(SButton[] current : buttons){
+			for(SButton check : current){
+				if(e.getSource() == check){
+				
+				}
+			}
+		}
 
 	}
 	

@@ -9,13 +9,15 @@ import javax.swing.JButton;
  * 
  * @author Matt
  */
-public class SButton extends JButton implements ActionListener{
+public class SButton extends JButton{
 
 	int xCoord;
 	int yCoord;
 	int value;
 	int displayValue;
-	
+	public boolean returnTrue(){
+		return true;
+	}
 	/**
 	 * String constructor for testing purposes.
 	 * @param string
@@ -97,9 +99,4 @@ public class SButton extends JButton implements ActionListener{
 		return false;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		System.out.println(xCoord + ", " + yCoord);
-		
-	}
 }
