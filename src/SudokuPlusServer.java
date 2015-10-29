@@ -21,7 +21,7 @@ public class SudokuPlusServer {
 	 */
 	@SuppressWarnings("resource")
 	public static void main(String[] args){
-		GameLogic game = new GameLogic();
+		GameLogic game = new GameLogic(2);
 		
 		int port = 7776;
 		ServerSocket serverSocket;

@@ -54,10 +54,9 @@ public class UserThread extends Thread {
 		
 			
 			while (true) {
-				
-				String line = scanner.nextLine();
+								//Format for input: "Command,Input,Input,Input...
 
-				//Format for input: "Command,Input,Input,Input...
+				String line = scanner.nextLine();
 				String[] split = line.split(",");
 				int [] input = new int[split.length];
 				int i = 0;
@@ -74,6 +73,7 @@ public class UserThread extends Thread {
 				case 1:
 					break;
 				default:
+
 					break;	
 				}
 				

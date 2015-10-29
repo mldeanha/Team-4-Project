@@ -49,11 +49,8 @@ public class Client {
 				}
 				
 				//Ask for a puzzle to do
-				System.out.println("Fun");
-				socketWriter.print("TESTINNG");
 				Scanner scanner = null;
 				try {
-					System.out.println("Fun");
 
 					scanner = new Scanner(socket.getInputStream());
 					
@@ -63,9 +60,10 @@ public class Client {
 				}
 				
 				while(true){
-				String line = scanner.nextLine();
-					System.out.println(line);
-					System.out.println(scanner.nextLine());
+					
+					String command = JOptionPane.showInputDialog("Please enter a command");
+					socketWriter.println(command);
+					socketWriter.flush();
 				}
 				//new GameGUI(socketWriter);
 	}

@@ -27,6 +27,17 @@ public class GameLogic {
 	//Integer (1,2 or 3) that sets the difficulty of the puzzle.
 	static int difficulty;
 
+	public GameLogic(){
+		
+	}
+	public GameLogic(int diff){
+		setDifficulty(diff);
+		try {
+			readPuzzle();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 //	//MAIN METHOD
 //	public static void main(String[] args)
 //	{
@@ -110,16 +121,20 @@ public class GameLogic {
 		int input = userGuess[1];
 		int guessY = userGuess[2];
 		int guessX = userGuess[3];
+		System.out.println("in" +input);
+		System.out.println("x" +guessY);
+		System.out.println("y" +guessX);
 
 		//Pulls out the number (in the form of a string) and converts it to an int
 		String correctNumber = currentPuzzleSolution[guessX][guessY];
 		int convertedNumber = Integer.parseInt(correctNumber);
-
 		//Checks if the guess was correct
 		if(convertedNumber == input){
-			guess = true;
-		}
 
+			guess = true;
+
+		}
+		System.out.println(guess);
 		//Returns true or false based off of guess accuracy
 		return guess;
 	}
