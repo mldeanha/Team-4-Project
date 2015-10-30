@@ -1,8 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Arrays;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -33,12 +36,24 @@ public class GameGUI extends JFrame implements ActionListener{
 
 	//Etc
 	private PrintWriter writer;
-	private SButton [][] buttons;
+	private SButton [][] buttonGrid;
+	private SButton [] buttonRow;
+	private Timer timer;
+	private Scanner scanner;
+	
+	private int currentNumber;
 
 	/**
 	 * Constructor class for GameGUI
 	 */
-	public GameGUI(PrintWriter writer){
+	public GameGUI(Socket socket){
+		try {
+			writer = new PrintWriter(socket.getOutputStream());
+			scanner = new Scanner(socket.getInputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		this.writer = writer;
 		
@@ -46,7 +61,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame = new JFrame("SudokuPlus");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
-		frame.setLayout(new SpringLayout());
+		frame.setLayout(new GridLayout());
 
 		//Build Menu
 		menuBar = new JMenuBar();
@@ -67,12 +82,12 @@ public class GameGUI extends JFrame implements ActionListener{
 		play = new JPanel(new GridLayout(9,9));
 		play.setSize(400, 400);
 		panel.setSize(400, 600);
-		buttons = new SButton[9][9];
+		buttonGrid = new SButton[9][9];
 		for(int i = 0; i < 9; i++){
 			for(int k = 0; k < 9; k++){
 				SButton current = new SButton((i) + ", " + (k));
 				play.add(current);
-				buttons[i][k] = current;
+				buttonGrid[i][k] = current;
 				current.setCoords(i, k);
 				current.addActionListener(this);
 			}
@@ -82,9 +97,13 @@ public class GameGUI extends JFrame implements ActionListener{
 		//Number Selection Row
 		pick = new JPanel();
 		pick.setSize(400,200);
+		buttonRow = new SButton[9];
 		for(int i = 0; i < 9; i++){
-			JButton current = new JButton("" + (i + 1));
+			SButton current = new SButton("" + (i + 1));
 			pick.add(current);
+			buttonRow[i] = current;
+			current.setCoords(0, 0);
+			current.setValue(i + 1);
 			current.addActionListener(this);
 
 		}
@@ -107,30 +126,63 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame.setJMenuBar(menuBar);
 		frame.add(panel);
 		frame.setVisible(true);
+		timer = new Timer(1000, this);
+		timer.start();
 
 	}
 
 	/**
 	 * ActionListener method for detecting user input
-	 * @param arg0
+	 * @param e
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == timer){
+			System.out.println("Timer Proc");
+			writer.println("1");
+			writer.flush();
+			String string = "";
+			String [] line;
+			string = string + scanner.nextLine();
+			line = string.split(" ");
+			
+			for(int i = 0, k = 0; i < 81; i++){
+				if(k == 9){
+					k = 0;
+				}
+				System.out.println(line[i]);
+				buttonGrid[(int) Math.floor(i/9)][k].setDisplayValue(Integer.parseInt(line[i]));
+				k++;
+			}				
+			area.setText(string);
+			System.out.println(string);
+		}
+		
 		if(e.getSource() == menu){
 			
 			
 			return;
 		}
 		
-		for(SButton[] current : buttons){
+		for(SButton check : buttonRow){
+			if(e.getSource() == check){
+				currentNumber = check.getValue();
+				field.setText("" + currentNumber);
+				return;
+			}
+		}
+		
+		for(SButton[] current : buttonGrid){
 			for(SButton check : current){
 				if(e.getSource() == check){
-				
+					return;
 				}
 			}
 		}
-
 	}
+	
+	
 	
 	//Temporary command setup
 	//Format for Commands: "Command,input,input..."
@@ -142,16 +194,17 @@ public class GameGUI extends JFrame implements ActionListener{
 	 * Main method for running GUI
 	 */
 	public static void main(String args[]){
-		String temp = "Project Assets/tester.txt";
-		PrintWriter tempWriter = null;
+		
+		Socket socket = null;
 		try {
-			tempWriter = new PrintWriter(temp);
-		} catch (FileNotFoundException e) {
+			socket = new Socket("127.1.1", 7776);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		new GameGUI(tempWriter);
+
+		new GameGUI(socket);
 	}
 }
 

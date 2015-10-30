@@ -148,12 +148,16 @@ public class GameLogic {
 	 */
 	public String getPuzzle(){
 		String singleString = "";
-		for(String[] level:currentPuzzle){
-			for(String add:level){
-				singleString = singleString + add;
+		for(int i = 0; i < 9; i++){
+			for(int k = 0; k < 9; k++){
+				singleString = singleString + currentPuzzle[i][k];
+				if(i * k != 64){
+					singleString = singleString + " ";
+				}
 			}
-			singleString = singleString + "\n";
+			
 		}
+		System.out.println(singleString);
 		return singleString;
 	}
 	
