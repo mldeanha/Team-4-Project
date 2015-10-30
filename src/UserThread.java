@@ -47,11 +47,6 @@ public class UserThread extends Thread {
 		try {
 
 			Scanner scanner = new Scanner(clientSocket.getInputStream());
-			System.out.println("g");
-			
-			socketWriter.println("Now it is");
-			socketWriter.flush();
-		
 			
 			while (true) {
 								//Format for input: "Command,Input,Input,Input...
@@ -71,25 +66,14 @@ public class UserThread extends Thread {
 					userGame.checkInput(input);
 					break;
 				case 1:
+					socketWriter.println(userGame.getPuzzle());
+					socketWriter.flush();
 					break;
 				default:
 
 					break;	
 				}
 				
-
-//				try {//Move this to separate thread
-//					//add GUI interactions here
-//					//Game to GUI send home the puzzles
-//					socketWriter.println("Command");
-//					socketWriter.flush();
-//					socketWriter.println(userGame.getPuzzle());
-//					socketWriter.flush();
-//					
-//					
-//				} catch (Exception e) {
-//					System.err.println("Client " + clientSocket.getInetAddress() + " issued an incorrect command: ERR" );
-//				}
 			}
 			
 		} catch (Exception e) {

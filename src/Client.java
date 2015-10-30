@@ -58,13 +58,17 @@ public class Client {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				new GameGUI(socketWriter);
+				//this is how to write to the server
+//				while(true){
+//					
+//					String command = JOptionPane.showInputDialog("Please enter a command");
+//					socketWriter.println(command);
+//					socketWriter.flush();
+//					while(true){
+//						System.out.println(scanner.nextLine());
+//					}
+//				}
 				
-				while(true){
-					
-					String command = JOptionPane.showInputDialog("Please enter a command");
-					socketWriter.println(command);
-					socketWriter.flush();
-				}
-				//new GameGUI(socketWriter);
 	}
 }
