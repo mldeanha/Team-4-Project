@@ -84,14 +84,42 @@ public class GameGUI extends JFrame implements ActionListener{
 		panel.setSize(400, 600);
 		buttonGrid = new SButton[9][9];
 		for(int i = 0; i < 9; i++){
+			int top = 1, left = 1,bottom = 1,right = 1;
 			for(int k = 0; k < 9; k++){
-				SButton current = new SButton((i) + ", " + (k));
+				SButton current = new SButton("");
 				play.add(current);
 				buttonGrid[i][k] = current;
 				current.setCoords(i, k);
 				current.addActionListener(this);
+				if((i+1) % 3 == 0){
+					bottom = 5;
+				}
+				if((k+1)%3 == 0){
+					right = 5;
+				}
+				if(i==0){
+					top =5;
+				}
+				if(k==0){
+					left =5;
+				}
+				current.setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Color.black));
+				top = 1;
+				left = 1;
+				bottom = 1;
+				right = 1;
+//				if( k == 2 ) current.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
+//				if( k == 3 ) current.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, Color.BLACK));
+//				if( k == 5 ) current.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
+//				if( k == 6 ) current.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, Color.BLACK));
+//				if( i == 2 ) current.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+//				if( i == 3 ) current.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
+//				if( i == 5 ) current.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+//				if( i == 6 ) current.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
+				
 			}
 		}
+		//play.setBackground(Color.BLACK);
 		play.setVisible(true);
 		
 		//Number Selection Row
@@ -126,7 +154,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame.setJMenuBar(menuBar);
 		frame.add(panel);
 		frame.setVisible(true);
-		timer = new Timer(1000, this);
+		timer = new Timer(10000, this);
 		timer.start();
 
 	}
@@ -139,9 +167,8 @@ public class GameGUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == timer){
-			System.out.println("Timer Proc");
-			writer.println("1");
-			writer.flush();
+			//System.out.println("Timer Proc");
+			sendCommand("1");
 			String string = "";
 			String [] line;
 			string = string + scanner.nextLine();
@@ -151,12 +178,12 @@ public class GameGUI extends JFrame implements ActionListener{
 				if(k == 9){
 					k = 0;
 				}
-				System.out.println(line[i]);
+				//System.out.println(line[i]);
 				buttonGrid[(int) Math.floor(i/9)][k].setDisplayValue(Integer.parseInt(line[i]));
 				k++;
 			}				
 			area.setText(string);
-			System.out.println(string);
+			//System.out.println(string);
 		}
 		
 		if(e.getSource() == menu){
@@ -186,8 +213,9 @@ public class GameGUI extends JFrame implements ActionListener{
 	
 	//Temporary command setup
 	//Format for Commands: "Command,input,input..."
-	public void sendCommand(){
-		
+	public void sendCommand(String command){
+		writer.println(command);
+		writer.flush();
 	}
 
 	/**

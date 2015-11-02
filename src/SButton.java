@@ -78,9 +78,10 @@ public class SButton extends JButton{
 	 */
 	public void setDisplayValue(int v){
 		displayValue = v;
-		this.setText("" + displayValue);
+		if( v != 0) this.setText("" + displayValue);
+		else this.setText(" ");
 	}
-	
+
 	/**
 	 * Get the button's displaying value.
 	 * @return int displayValue
