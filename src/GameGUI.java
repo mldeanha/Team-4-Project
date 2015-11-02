@@ -91,31 +91,26 @@ public class GameGUI extends JFrame implements ActionListener{
 				buttonGrid[i][k] = current;
 				current.setCoords(i, k);
 				current.addActionListener(this);
-				if((i+1) % 3 == 0){
-					bottom = 5;
+				if((i + 1) % 3 == 0){
+					bottom = 3;
 				}
-				if((k+1)%3 == 0){
-					right = 5;
+				if((k + 1) % 3 == 0){
+					right = 3;
 				}
-				if(i==0){
-					top =5;
+				if(i == 0){
+					top = 3;
 				}
-				if(k==0){
-					left =5;
+				if(k == 0){
+					left = 3;
 				}
-				current.setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Color.black));
+				current.setBackground(new Color(249,241,220));
+				current.setFocusable(false);
+				current.setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, new Color(66,36,26)));
 				top = 1;
 				left = 1;
 				bottom = 1;
 				right = 1;
-//				if( k == 2 ) current.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
-//				if( k == 3 ) current.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, Color.BLACK));
-//				if( k == 5 ) current.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
-//				if( k == 6 ) current.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, Color.BLACK));
-//				if( i == 2 ) current.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
-//				if( i == 3 ) current.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
-//				if( i == 5 ) current.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
-//				if( i == 6 ) current.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
+
 				
 			}
 		}
