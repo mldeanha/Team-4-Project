@@ -40,8 +40,10 @@ public class GameGUI extends JFrame implements ActionListener{
 	private SButton [] buttonRow;
 	private Timer timer;
 	private Scanner scanner;
+	Scanner keyboard = new Scanner(System.in);
 	
-	private int currentNumber;
+	
+	private int currentNumber = -1;
 
 	/**
 	 * Constructor class for GameGUI
@@ -127,6 +129,7 @@ public class GameGUI extends JFrame implements ActionListener{
 			buttonRow[i] = current;
 			current.setCoords(0, 0);
 			current.setValue(i + 1);
+			current.setBackground(new Color(245,148,118));
 			current.addActionListener(this);
 
 		}
@@ -149,9 +152,9 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame.setJMenuBar(menuBar);
 		frame.add(panel);
 		frame.setVisible(true);
-		timer = new Timer(10000, this);
+		timer = new Timer(2000, this);		
+		timer.setInitialDelay(0);
 		timer.start();
-
 	}
 
 	/**
@@ -166,18 +169,27 @@ public class GameGUI extends JFrame implements ActionListener{
 			sendCommand("1");
 			String string = "";
 			String [] line;
-			string = string + scanner.nextLine();
+			string = string + scanner.nextLine();				
 			line = string.split(" ");
+
+			if(line.length == 81){ //if the input was the puzzle change the buttons
+				
+				for(int i = 0, k = 0; i < 81; i++){
+					if(k == 9){
+						k = 0;
+					}
+					//System.out.println(line[i]);
+					buttonGrid[(int) Math.floor(i/9)][k].setDisplayValue(Integer.parseInt(line[i]));
+					if(Integer.parseInt(line[i]) != 0){
+						buttonGrid[(int) Math.floor(i/9)][k].setEnabled(false);
+						buttonGrid[(int) Math.floor(i/9)][k].setForeground(Color.black);
+
+					}
+					k++;
+				}	
+				area.setText(string);//debug purposes
+			}
 			
-			for(int i = 0, k = 0; i < 81; i++){
-				if(k == 9){
-					k = 0;
-				}
-				//System.out.println(line[i]);
-				buttonGrid[(int) Math.floor(i/9)][k].setDisplayValue(Integer.parseInt(line[i]));
-				k++;
-			}				
-			area.setText(string);
 			//System.out.println(string);
 		}
 		
@@ -188,16 +200,40 @@ public class GameGUI extends JFrame implements ActionListener{
 		}
 		
 		for(SButton check : buttonRow){
+			
 			if(e.getSource() == check){
 				currentNumber = check.getValue();
 				field.setText("" + currentNumber);
+				for(SButton renew : buttonRow){
+					renew.setBackground(new Color(245,148,118));
+					check.setSelected(false);
+				}
+				check.setSelected(true);
+				check.setBackground(new Color(169,169,169));
+				
 				return;
 			}
 		}
 		
+		
 		for(SButton[] current : buttonGrid){
 			for(SButton check : current){
 				if(e.getSource() == check){
+					if(currentNumber < 0){
+						JOptionPane.showMessageDialog(this,"Please Select a Number for the Cell.");
+						return;
+					}
+					sendCommand("0 "+currentNumber + " " + check.getYCoord() + " " + check.getXCoord());
+					String string = "";
+					string = string + scanner.nextLine();						
+					check.setDisplayValue(currentNumber);
+					if(string.equals("0")){
+						check.setEnabled(false);
+					}else{
+						check.setForeground(new Color(100,0,0));
+						check.setBackground(new Color(225,0,0));
+					}
+					
 					return;
 				}
 			}
@@ -207,8 +243,8 @@ public class GameGUI extends JFrame implements ActionListener{
 	
 	
 	//Temporary command setup
-	//Format for Commands: "Command,input,input..."
-	public void sendCommand(String command){
+	//Format for Commands: "Command input input..."
+	public void sendCommand(String command){ //Possibly return command response
 		writer.println(command);
 		writer.flush();
 	}

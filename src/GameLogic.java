@@ -157,7 +157,6 @@ public class GameLogic {
 			}
 			
 		}
-		System.out.println(singleString);
 		return singleString;
 	}
 	

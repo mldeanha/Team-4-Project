@@ -24,6 +24,7 @@ public class UserThread extends Thread {
 	private Socket clientSocket;
 	PrintWriter socketWriter;
 	Scanner scanner;
+	private String currentPuzzle;
 	/**
 	 * This is the constructor for the user thread in which
 	 * the socket and game are preserved to be used in run
@@ -49,10 +50,10 @@ public class UserThread extends Thread {
 			Scanner scanner = new Scanner(clientSocket.getInputStream());
 			
 			while (true) {
-								//Format for input: "Command,Input,Input,Input...
+								//Format for input: "Command Input Input Input...
 
 				String line = scanner.nextLine();
-				String[] split = line.split(",");
+				String[] split = line.split(" ");
 				int [] input = new int[split.length];
 				int i = 0;
 				for(String convert : split){
@@ -63,11 +64,23 @@ public class UserThread extends Thread {
 				//into game changes and server interactions
 				switch(input[0]){
 				case 0:
-					userGame.checkInput(input);
-					break;
-				case 1:
-					socketWriter.println(userGame.getPuzzle());
+					if(userGame.checkInput(input)){
+						socketWriter.println("0");
+						//Change Server Puzzle Here!
+					}else{
+						socketWriter.println("1");
+					}
 					socketWriter.flush();
+					break;
+				case 1://Get Puzzle
+					if(userGame.getPuzzle().equals(currentPuzzle)){ //if the puzzle hasn't changes don't send it
+						socketWriter.println(""); //Doesn't send full puzzle
+					}else{
+						socketWriter.println(userGame.getPuzzle());//If it's has changed
+						currentPuzzle = userGame.getPuzzle();
+					}
+					socketWriter.flush();
+
 					break;
 				default:
 
