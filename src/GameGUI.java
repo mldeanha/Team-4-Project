@@ -229,6 +229,7 @@ public class GameGUI extends JFrame implements ActionListener{
 					check.setDisplayValue(currentNumber);
 					if(string.equals("0")){
 						check.setEnabled(false);
+						check.setBackground(new Color(249,241,220));
 					}else{
 						check.setForeground(new Color(100,0,0));
 						check.setBackground(new Color(225,0,0));
