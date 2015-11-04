@@ -15,6 +15,7 @@ public class SButton extends JButton{
 	int yCoord;
 	int value;
 	int displayValue;
+	
 	public boolean returnTrue(){
 		return true;
 	}
@@ -26,7 +27,7 @@ public class SButton extends JButton{
 		this.setText(string);
 		xCoord = 0;
 		yCoord = 0;
-		value = 0;
+		value = -1;
 		displayValue = 0;
 	}
 

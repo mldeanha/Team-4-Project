@@ -121,9 +121,9 @@ public class GameLogic {
 		int input = userGuess[1];
 		int guessY = userGuess[2];
 		int guessX = userGuess[3];
-		System.out.println("in" +input);
-		System.out.println("x" +guessY);
-		System.out.println("y" +guessX);
+//		System.out.println("in" +input);
+//		System.out.println("x" +guessY);
+//		System.out.println("y" +guessX);
 
 		//Pulls out the number (in the form of a string) and converts it to an int
 		String correctNumber = currentPuzzleSolution[guessX][guessY];
@@ -132,9 +132,9 @@ public class GameLogic {
 		if(convertedNumber == input){
 
 			guess = true;
-
+			currentPuzzle[guessX][guessY] = "" + input;
 		}
-		System.out.println(guess);
+//		System.out.println(guess);
 		//Returns true or false based off of guess accuracy
 		return guess;
 	}

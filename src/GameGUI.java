@@ -152,7 +152,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame.setJMenuBar(menuBar);
 		frame.add(panel);
 		frame.setVisible(true);
-		timer = new Timer(2000, this);		
+		timer = new Timer(250, this);		
 		timer.setInitialDelay(0);
 		timer.start();
 	}
@@ -180,8 +180,10 @@ public class GameGUI extends JFrame implements ActionListener{
 					}
 					//System.out.println(line[i]);
 					buttonGrid[(int) Math.floor(i/9)][k].setDisplayValue(Integer.parseInt(line[i]));
+					buttonGrid[(int) Math.floor(i/9)][k].setBackground(new Color(249,241,220));
 					if(Integer.parseInt(line[i]) != 0){
-						buttonGrid[(int) Math.floor(i/9)][k].setEnabled(false);
+						//buttonGrid[(int) Math.floor(i/9)][k].setEnabled(false);					
+						buttonGrid[(int) Math.floor(i/9)][k].setValue(Integer.parseInt(line[i]));
 						buttonGrid[(int) Math.floor(i/9)][k].setForeground(Color.black);
 
 					}
@@ -222,20 +224,36 @@ public class GameGUI extends JFrame implements ActionListener{
 					if(currentNumber < 0){
 						JOptionPane.showMessageDialog(this,"Please Select a Number for the Cell.");
 						return;
-					}
-					sendCommand("0 "+currentNumber + " " + check.getYCoord() + " " + check.getXCoord());
-					String string = "";
-					string = string + scanner.nextLine();						
-					check.setDisplayValue(currentNumber);
-					if(string.equals("0")){
-						check.setEnabled(false);
-						check.setBackground(new Color(249,241,220));
-					}else{
-						check.setForeground(new Color(100,0,0));
-						check.setBackground(new Color(225,0,0));
-					}
+					}else if (check.getValue() < 0){
+						
 					
-					return;
+						sendCommand("0 "+currentNumber + " " + check.getYCoord() + " " + check.getXCoord());
+						String string = "";
+						string = string + scanner.nextLine();						
+						check.setDisplayValue(currentNumber);
+						if(string.equals("0")){
+							//check.setEnabled(false);
+							check.setBackground(new Color(249,241,220));
+						}else{
+							check.setForeground(new Color(100,0,0));
+							check.setBackground(new Color(225,0,0));
+						}
+						
+						return;
+					}else{
+						for(SButton[] row : buttonGrid){
+							for(SButton highlight : row){
+								highlight.setBackground(new Color(249,241,220));
+								if(highlight.getValue()==check.getValue()){
+									highlight.setBackground(new Color(135,206,250));
+
+								}
+								
+							}
+						}
+						
+						System.out.println("hi");
+					}
 				}
 			}
 		}
