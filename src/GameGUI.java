@@ -221,10 +221,11 @@ public class GameGUI extends JFrame implements ActionListener{
 		for(SButton[] current : buttonGrid){
 			for(SButton check : current){
 				if(e.getSource() == check){
-					if(currentNumber < 0){
+				
+					if(currentNumber < 0 && !check.valueAndDisplayEqual()){
 						JOptionPane.showMessageDialog(this,"Please Select a Number for the Cell.");
 						return;
-					}else if (check.getValue() < 0){
+				}else if (check.getValue() < 0){
 						
 					
 						sendCommand("0 "+currentNumber + " " + check.getYCoord() + " " + check.getXCoord());
@@ -243,6 +244,7 @@ public class GameGUI extends JFrame implements ActionListener{
 					}else{
 						for(SButton[] row : buttonGrid){
 							for(SButton highlight : row){
+								
 								highlight.setBackground(new Color(249,241,220));
 								if(highlight.getValue()==check.getValue()){
 									highlight.setBackground(new Color(135,206,250));
@@ -252,7 +254,6 @@ public class GameGUI extends JFrame implements ActionListener{
 							}
 						}
 						
-						System.out.println("hi");
 					}
 				}
 			}
