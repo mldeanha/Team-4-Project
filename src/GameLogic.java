@@ -19,16 +19,20 @@ public class GameLogic {
 	boolean guessVariable;
 
 	//Contains all of the values of the current puzzle stored in an array.
-	static String[][] currentPuzzle = new String[9][9];
+	String[][] currentPuzzle = new String[9][9];
 
 	//Contains all of the values of the current puzzle's solution.
-	static String[][] currentPuzzleSolution = new String[9][9];
+	String[][] currentPuzzleSolution = new String[9][9];
 
 	//Integer (1,2 or 3) that sets the difficulty of the puzzle.
-	static int difficulty;
+	int difficulty;
+
+	//This boolean will translate whether or not the user has completed the puzzle
+	boolean completed;
+
 
 	public GameLogic(){
-		
+
 	}
 	public GameLogic(int diff){
 		setDifficulty(diff);
@@ -38,63 +42,63 @@ public class GameLogic {
 			e.printStackTrace();
 		}
 	}
-//	//MAIN METHOD
-//	public static void main(String[] args)
-//	{
-//
-//		//JUST FOR TESTING. THERE WILL NOT BE A MAIN METHOD IN FUTURE VERSIONS
-//		GameLogic tester = new GameLogic();
-//		int[] guess = {8,5,6};
-//		int[] guess2 = {4,8,8};
-//		int[] guess3 = {4,0,2};
-//		tester.setDifficulty(3);
-//
-//		try {
-//			tester.readPuzzle();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//
-//		//PRINTS OUT CURRENT PUZZLE
-//		System.out.println("THE PUZZLE THE USER WILL WORK ON: ");
-//		for(int i=0;i<9;i++){
-//			for(int j=0;j<9;j++){
-//				System.out.print(currentPuzzle[i][j]);
-//			}
-//			System.out.println();
-//		}
-//
-//		//PRINTS A LINE
-//		System.out.println();
-//
-//		//PRINTS OUT THE COORESPONDING SOLUTION
-//		System.out.println("THE SOLUTION TO THE PUZZLE THE USER WILL WORK ON: ");
-//		for(int i=0;i<9;i++){
-//			for(int j=0;j<9;j++){
-//				System.out.print(currentPuzzleSolution[i][j]);
-//			}
-//			System.out.println();
-//		}
-//
-//		//PRINTS A LINE
-//		System.out.println();
-//
-//		//TO CHECK THESE INPUTS YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!!
-//		//GUESS 1
-//		System.out.println("YOURE GUESSING THE NUMBER " + guess[0] + " IS AT: [" + guess[1] + "," + guess[2] + "]");
-//		System.out.println(tester.checkInput(guess));
-//		System.out.println();
-//		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!
-//		//GUESS 2
-//		System.out.println("YOURE GUESSING THE NUMBER " + guess2[0] + " IS AT: [" + guess2[1] + "," + guess2[2] + "]");
-//		System.out.println(tester.checkInput(guess2));
-//		System.out.println();
-//		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!
-//		//GUESS 3
-//		System.out.println("YOURE GUESSING THE NUMBER " + guess3[0] + " IS AT: [" + guess3[1] + "," + guess3[2] + "]");
-//		System.out.println(tester.checkInput(guess3));
-//	}
-//
+	//	//MAIN METHOD
+	//	public static void main(String[] args)
+	//	{
+	//
+	//		//JUST FOR TESTING. THERE WILL NOT BE A MAIN METHOD IN FUTURE VERSIONS
+	//		GameLogic tester = new GameLogic();
+	//		int[] guess = {8,5,6};
+	//		int[] guess2 = {4,8,8};
+	//		int[] guess3 = {4,0,2};
+	//		tester.setDifficulty(3);
+	//
+	//		try {
+	//			tester.readPuzzle();
+	//		} catch (FileNotFoundException e) {
+	//			e.printStackTrace();
+	//		}
+	//
+	//		//PRINTS OUT CURRENT PUZZLE
+	//		System.out.println("THE PUZZLE THE USER WILL WORK ON: ");
+	//		for(int i=0;i<9;i++){
+	//			for(int j=0;j<9;j++){
+	//				System.out.print(currentPuzzle[i][j]);
+	//			}
+	//			System.out.println();
+	//		}
+	//
+	//		//PRINTS A LINE
+	//		System.out.println();
+	//
+	//		//PRINTS OUT THE COORESPONDING SOLUTION
+	//		System.out.println("THE SOLUTION TO THE PUZZLE THE USER WILL WORK ON: ");
+	//		for(int i=0;i<9;i++){
+	//			for(int j=0;j<9;j++){
+	//				System.out.print(currentPuzzleSolution[i][j]);
+	//			}
+	//			System.out.println();
+	//		}
+	//
+	//		//PRINTS A LINE
+	//		System.out.println();
+	//
+	//		//TO CHECK THESE INPUTS YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!!
+	//		//GUESS 1
+	//		System.out.println("YOURE GUESSING THE NUMBER " + guess[0] + " IS AT: [" + guess[1] + "," + guess[2] + "]");
+	//		System.out.println(tester.checkInput(guess));
+	//		System.out.println();
+	//		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!
+	//		//GUESS 2
+	//		System.out.println("YOURE GUESSING THE NUMBER " + guess2[0] + " IS AT: [" + guess2[1] + "," + guess2[2] + "]");
+	//		System.out.println(tester.checkInput(guess2));
+	//		System.out.println();
+	//		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!
+	//		//GUESS 3
+	//		System.out.println("YOURE GUESSING THE NUMBER " + guess3[0] + " IS AT: [" + guess3[1] + "," + guess3[2] + "]");
+	//		System.out.println(tester.checkInput(guess3));
+	//	}
+	//
 	/**
 	 * WORKING AS OF 10/22/15
 	 * 
@@ -121,9 +125,9 @@ public class GameLogic {
 		int input = userGuess[1];
 		int guessY = userGuess[2];
 		int guessX = userGuess[3];
-//		System.out.println("in" +input);
-//		System.out.println("x" +guessY);
-//		System.out.println("y" +guessX);
+		//		System.out.println("in" +input);
+		//		System.out.println("x" +guessY);
+		//		System.out.println("y" +guessX);
 
 		//Pulls out the number (in the form of a string) and converts it to an int
 		String correctNumber = currentPuzzleSolution[guessX][guessY];
@@ -134,7 +138,7 @@ public class GameLogic {
 			guess = true;
 			currentPuzzle[guessX][guessY] = "" + input;
 		}
-//		System.out.println(guess);
+		//		System.out.println(guess);
 		//Returns true or false based off of guess accuracy
 		return guess;
 	}
@@ -155,11 +159,11 @@ public class GameLogic {
 					singleString = singleString + " ";
 				}
 			}
-			
+
 		}
 		return singleString;
 	}
-	
+
 	/**
 	 * WORKING AS OF 10/27/15
 	 * 
@@ -197,7 +201,7 @@ public class GameLogic {
 		}
 
 	}
-	
+
 	/**
 	 * WORKING AS OF 10/27/15
 	 * 
@@ -304,5 +308,42 @@ public class GameLogic {
 			k++;
 		}
 
+	}
+
+	/**
+	 * WORKING AS OF 11/10/15
+	 * 
+	 * All this method does is return true/false based off if the user has completed
+	 * the current puzzle or not.
+	 * 
+	 * @return boolean (true/false) if the user has completed the puzzle or not.
+	 */
+	public boolean isComplete(){
+
+		if(currentPuzzle.equals(currentPuzzleSolution)){
+			return true;
+		}
+
+		else{
+			return false;
+		}
+	}
+
+	/**
+	 * This method is strictly for testing purposes. It will have the same logic as 
+	 * isComplete, except it will have parameters. We don't have a method that can be used
+	 * to set the puzzle, so in order to test it from a separate class, we need this method.
+	 * 
+	 * @param puzzleOne - The randomly generated puzzle
+	 * @param puzzleTwo - The solution to the puzzle that is retrieved from getPuzzleSolution
+	 * 
+	 * @return true/false based off of 
+	 */
+	public boolean isCompleteTest(String[][] puzzleOne,String[][] puzzleTwo){
+
+		if(puzzleOne.equals(puzzleTwo)){
+			return true;
+		}
+		return false;
 	}
 }
