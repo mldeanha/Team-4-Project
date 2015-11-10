@@ -32,7 +32,7 @@ public class GameGUI extends JFrame implements ActionListener{
 	//MenuBar items
 	private JMenuBar menuBar;
 	private JMenu menu;
-	private JMenuItem menuItem;
+	private JMenuItem aboutMenuItem;
 
 	//Etc
 	private PrintWriter writer;
@@ -71,13 +71,15 @@ public class GameGUI extends JFrame implements ActionListener{
 		menu.getAccessibleContext().setAccessibleDescription("Main Menu");
 		menuBar.add(menu);
 
-		menuItem = new JMenuItem("About");
-		menuItem.getAccessibleContext().setAccessibleDescription(
+		aboutMenuItem = new JMenuItem("About");
+		aboutMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Displays information about this program");
-		menu.add(menuItem);
+		menu.add(aboutMenuItem);
+		aboutMenuItem.addActionListener(this);
 
 		//Build Panels
-		panel = new JPanel(new GridLayout(2,2));
+		panel = new JPanel(new GridBagLayout());
+
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		//Button Grid
@@ -137,13 +139,43 @@ public class GameGUI extends JFrame implements ActionListener{
 
 		//Chat Window and Input field
 		field = new JTextField(20);
-		area = new JTextArea(10,20);
+		area = new JTextArea(20,10);
 		area.setEditable(false);
 		
-		panel.add(play);
-		panel.add(area);
-		panel.add(pick);
-		panel.add(field);
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		c.gridheight = 2;
+		c.fill = GridBagConstraints.BOTH;
+		c.ipadx = 20;
+		c.ipady = 20;
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.weightx = 1.0;
+		c.weighty = 1.0;
+		panel.add(play, c);
+		c = new GridBagConstraints();
+		c.gridx = 2;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		c.gridheight = 2;
+		c.fill = GridBagConstraints.VERTICAL;
+		c.anchor = GridBagConstraints.FIRST_LINE_END;
+		panel.add(area, c);
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 2;
+		c.gridheight = 1;
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.LAST_LINE_START;
+		panel.add(pick, c);
+		c = new GridBagConstraints();
+		c.gridx = 2;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		panel.add(field, c);
 
 		panel.setOpaque(false);
 		panel.setVisible(true);		
@@ -182,7 +214,7 @@ public class GameGUI extends JFrame implements ActionListener{
 					buttonGrid[(int) Math.floor(i/9)][k].setDisplayValue(Integer.parseInt(line[i]));
 					buttonGrid[(int) Math.floor(i/9)][k].setBackground(new Color(249,241,220));
 					if(Integer.parseInt(line[i]) != 0){
-						//buttonGrid[(int) Math.floor(i/9)][k].setEnabled(false);					
+						//buttonGrid[(int) Math.floor(i/9)][k].setEnabled(false);				
 						buttonGrid[(int) Math.floor(i/9)][k].setValue(Integer.parseInt(line[i]));
 						buttonGrid[(int) Math.floor(i/9)][k].setForeground(Color.black);
 
@@ -195,7 +227,14 @@ public class GameGUI extends JFrame implements ActionListener{
 			//System.out.println(string);
 		}
 		
+<<<<<<< HEAD
 		if(e.getSource() == menu){
+=======
+		if(e.getSource() == aboutMenuItem){
+			JOptionPane.showMessageDialog(null, "SudokuPlus\nA Sudoku game for multiple people\n\n"
+					+ "Developed by:\n-Mitchell Baer     -Eric Celerin     -Matt Dean-Hall\n\nCreated 2015");
+			
+>>>>>>> 98bb05b4fadf16896da1b6628bb5efe80f1d4d48
 			return;
 		}
 		
@@ -265,23 +304,6 @@ public class GameGUI extends JFrame implements ActionListener{
 	public void sendCommand(String command){ //Possibly return command response
 		writer.println(command);
 		writer.flush();
-	}
-
-	/**
-	 * Main method for running GUI
-	 */
-	public static void main(String args[]){
-		
-		Socket socket = null;
-		try {
-			socket = new Socket("127.1.1", 7776);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		new GameGUI(socket);
 	}
 }
 
