@@ -69,8 +69,40 @@ public class GameLogicTester {
 			assertEquals(generatedDifficulty,actualDifficulty);
 			i++;
 		}
-
-
+		System.out.println();
 	}
 
+	@Test
+	//-----------Test 3----------
+	//This method tests whether or not the isComplete (isCompleteTest**) is working correctly
+	//It will generate a random puzzle and compare it with another arbitrary puzzle (in our case
+	//it will be compared with the puzzle return from .getPuzzleSolution).
+	//
+	//NOTE: The assertion here should be false and in being false, it should pass the tests.
+	public void test3(){
+
+		GameLogic test = new GameLogic();
+		String[][] tester = test.getPuzzleSolution();
+		String[][] compareTo = new String[9][9];
+
+		Random rand = new Random();
+
+		int k=0;
+		while(k<10){
+
+			for(int i=0;i<9;i++){
+				for(int j=0;j<9;j++){
+					int randomGeneration = rand.nextInt((9-1)+1)+1;
+					compareTo[i][j] = "" + randomGeneration;
+				}
+			}
+			System.out.println("Test 3." + (k+1) + " : " + test.isCompleteTest(compareTo, tester));
+
+			assertFalse(test.isCompleteTest(compareTo,tester));
+			k++;
+		}
+
+		System.out.println();
+
+	}
 }

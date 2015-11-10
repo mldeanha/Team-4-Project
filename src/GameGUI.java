@@ -196,8 +196,6 @@ public class GameGUI extends JFrame implements ActionListener{
 		}
 		
 		if(e.getSource() == menu){
-			
-			
 			return;
 		}
 		

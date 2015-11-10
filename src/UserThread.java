@@ -66,7 +66,7 @@ public class UserThread extends Thread {
 				case 0:
 					if(userGame.checkInput(input)){
 						socketWriter.println("0");
-						//Change Server Puzzle Here!tee
+						//Change Server Puzzle Here!
 					}else{
 						socketWriter.println("1");
 					}
