@@ -1,10 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -22,7 +20,6 @@ public class GameGUI extends JFrame implements ActionListener{
 
 	//Base frame
 	private JFrame frame;
-	private JLabel label1;
 	private JPanel panel;
 	private JPanel play;
 	private JPanel pick;
@@ -57,13 +54,13 @@ public class GameGUI extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 
-		this.writer = writer;
+		//this.writer = writer;
 		
 		//Build Jframe
 		frame = new JFrame("SudokuPlus");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
-		frame.setLayout(new GridLayout());
+		//frame.setLayout(new GridLayout());
 
 		//Build Menu
 		menuBar = new JMenuBar();
@@ -79,7 +76,6 @@ public class GameGUI extends JFrame implements ActionListener{
 
 		//Build Panels
 		panel = new JPanel(new GridBagLayout());
-
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		//Button Grid
@@ -139,8 +135,10 @@ public class GameGUI extends JFrame implements ActionListener{
 
 		//Chat Window and Input field
 		field = new JTextField(20);
-		area = new JTextArea(20,10);
+		area = new JTextArea(20,20);
 		area.setEditable(false);
+		area.setWrapStyleWord(true);
+		area.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
@@ -154,27 +152,41 @@ public class GameGUI extends JFrame implements ActionListener{
 		c.weightx = 1.0;
 		c.weighty = 1.0;
 		panel.add(play, c);
+		
 		c = new GridBagConstraints();
 		c.gridx = 2;
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.gridheight = 2;
-		c.fill = GridBagConstraints.VERTICAL;
+		c.fill = GridBagConstraints.BOTH;
+		c.ipadx = 20;
+		c.ipady = 20;
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
+		c.weightx = 0.5;
+		c.weighty = 1.0;
 		panel.add(area, c);
+		
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 2;
 		c.gridheight = 1;
 		c.fill = GridBagConstraints.BOTH;
+		c.ipadx = 20;
+		c.ipady = 20;
 		c.anchor = GridBagConstraints.LAST_LINE_START;
+		c.weightx = 1.0;
 		panel.add(pick, c);
+		
 		c = new GridBagConstraints();
 		c.gridx = 2;
 		c.gridy = 2;
 		c.gridwidth = 1;
 		c.gridheight = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipadx = 20;
+		c.ipady = 20;
+		c.weightx = 0.5;
 		panel.add(field, c);
 
 		panel.setOpaque(false);
@@ -183,6 +195,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		//Finish JFrame
 		frame.setJMenuBar(menuBar);
 		frame.add(panel);
+		frame.setMinimumSize(new Dimension(700, 450));
 		frame.setVisible(true);
 		timer = new Timer(250, this);		
 		timer.setInitialDelay(0);
@@ -190,15 +203,17 @@ public class GameGUI extends JFrame implements ActionListener{
 	}
 
 	/**
-	 * ActionListener method for detecting user input
+	 * ActionListener method for detecting user input.
+	 * All ActionListener elements use this method. Possible to
+	 * be improved with more specialized listeners.
+	 * 
 	 * @param e
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource() == timer){
-			//System.out.println("Timer Proc");
-			sendCommand("1");
+		if(e.getSource() == timer){ //This action performs at every timer tick
+			sendCommand("1");		//Command 1: Check for an update to the puzzle
 			String string = "";
 			String [] line;
 			string = string + scanner.nextLine();				
@@ -210,31 +225,28 @@ public class GameGUI extends JFrame implements ActionListener{
 					if(k == 9){
 						k = 0;
 					}
-					//System.out.println(line[i]);
 					buttonGrid[(int) Math.floor(i/9)][k].setDisplayValue(Integer.parseInt(line[i]));
 					buttonGrid[(int) Math.floor(i/9)][k].setBackground(new Color(249,241,220));
-					if(Integer.parseInt(line[i]) != 0){
-						//buttonGrid[(int) Math.floor(i/9)][k].setEnabled(false);				
+					if(Integer.parseInt(line[i]) != 0){		
 						buttonGrid[(int) Math.floor(i/9)][k].setValue(Integer.parseInt(line[i]));
 						buttonGrid[(int) Math.floor(i/9)][k].setForeground(Color.black);
 
 					}
 					k++;
 				}	
-				area.setText(string);//debug purposes
+				//area.setText(string);//debug purposes
 			}
-			
-			//System.out.println(string);
+			area.setText(frame.getWidth() + ", " + frame.getHeight());//windowsize debug
 		}
 		
-		if(e.getSource() == aboutMenuItem){
+		if(e.getSource() == aboutMenuItem){ //This action performs the function of the About menubar item
 			JOptionPane.showMessageDialog(null, "SudokuPlus\nA Sudoku game for multiple people\n\n"
 					+ "Developed by:\n-Mitchell Baer     -Eric Celerin     -Matt Dean-Hall\n\nCreated 2015");
 			
 			return;
 		}
 		
-		for(SButton check : buttonRow){
+		for(SButton check : buttonRow){		//This action listens for the user's use of the number selection row
 			
 			if(e.getSource() == check){
 				currentNumber = check.getValue();
@@ -251,7 +263,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		}
 		
 		
-		for(SButton[] current : buttonGrid){
+		for(SButton[] current : buttonGrid){	//This action listens for the user's use of a main grid button
 			for(SButton check : current){
 				if(e.getSource() == check){
 				
@@ -261,7 +273,7 @@ public class GameGUI extends JFrame implements ActionListener{
 				}else if (check.getValue() < 0){
 						
 					
-						sendCommand("0 "+currentNumber + " " + check.getYCoord() + " " + check.getXCoord());
+						sendCommand("0 "+currentNumber + " " + check.getYCoord() + " " + check.getXCoord());	//Command 0: Send the selected box to the server
 						String string = "";
 						string = string + scanner.nextLine();						
 						check.setDisplayValue(currentNumber);
@@ -294,10 +306,14 @@ public class GameGUI extends JFrame implements ActionListener{
 	}
 	
 	
-	
-	//Temporary command setup
-	//Format for Commands: "Command input input..."
-	public void sendCommand(String command){ //Possibly return command response
+	/**
+	 * Command input method that sends commands through
+	 * the user thread to the server.
+	 * 
+	 * Format for Commands: "Command#, input, input, ..."
+	 * @param command
+	 */
+	public void sendCommand(String command){
 		writer.println(command);
 		writer.flush();
 	}
