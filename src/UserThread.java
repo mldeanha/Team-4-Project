@@ -74,7 +74,8 @@ public class UserThread extends Thread {
 					break;
 				case 1://Get Puzzle
 					if(userGame.getPuzzle().equals(currentPuzzle)){ //if the puzzle hasn't changes don't send it
-						socketWriter.println(""); //Doesn't send full puzzle
+						socketWriter.println(userGame.isComplete());
+						//Doesn't send full puzzle
 					}else{
 						socketWriter.println(userGame.getPuzzle());//If it's has changed
 						currentPuzzle = userGame.getPuzzle();

@@ -218,7 +218,6 @@ public class GameGUI extends JFrame implements ActionListener{
 			String [] line;
 			string = string + scanner.nextLine();				
 			line = string.split(" ");
-
 			if(line.length == 81){ //if the input was the puzzle change the buttons
 				
 				for(int i = 0, k = 0; i < 81; i++){
@@ -235,6 +234,9 @@ public class GameGUI extends JFrame implements ActionListener{
 					k++;
 				}	
 				//area.setText(string);//debug purposes
+			}else if(string.equals("true")){
+				System.out.println("Game Over");
+				
 			}
 			area.setText(frame.getWidth() + ", " + frame.getHeight());//windowsize debug
 		}
