@@ -78,6 +78,12 @@ public class GameLogicTester {
 	//It will generate a random puzzle and compare it with another arbitrary puzzle (in our case
 	//it will be compared with the puzzle return from .getPuzzleSolution).
 	//
+	//Since the puzzle is randomly generated, there is almost NO way that it will
+	//be equal to another puzzle. Part of this may be because it may not even follow
+	//the rules of sudoku. All this test does is make sure that they can be compared using .equals.
+	//
+	//If at any point it were to return true, and then fail the tests, there would be an issue.
+	//
 	//NOTE: The assertion here should be false and in being false, it should pass the tests.
 	public void test3(){
 
