@@ -82,7 +82,7 @@ public class GameLogicTester {
 	//be equal to another puzzle. Part of this may be because it may not even follow
 	//the rules of sudoku. All this test does is make sure that they can be compared using .equals.
 	//
-	//If at any point it were to return true, and then fail the tests, there would be an issue.
+	//If at any point it were to return true, and then fail the tests, there would be an issue with our isComplete method.
 	//
 	//NOTE: The assertion here should be false and in being false, it should pass the tests.
 	public void test3(){
