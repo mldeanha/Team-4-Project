@@ -295,17 +295,16 @@ public class GameGUI extends JFrame implements ActionListener{
 								highlight.setBackground(new Color(249,241,220));
 								if(highlight.getValue()==check.getValue()){
 									highlight.setBackground(new Color(135,206,250));
-
 								}
-								
 							}
 						}
-						
 					}
+					
 				}
 			}
-		}
-	}
+		} //End ButtonGrid Check
+		
+	} //End ActionListener
 	
 	
 	/**
