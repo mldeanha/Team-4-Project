@@ -234,8 +234,11 @@ public class GameGUI extends JFrame implements ActionListener{
 					k++;
 				}	
 				//area.setText(string);//debug purposes
-			}else if(string.equals("true")){
+			}else if(string.equals("true")){ //Win Condition
 				System.out.println("Game Over");
+				timer.stop();
+				JOptionPane.showMessageDialog(null, "WINNER!\n\nPlease relaunch the server and play again!");
+				System.exit(1);
 				
 			}
 			area.setText(frame.getWidth() + ", " + frame.getHeight());//windowsize debug
