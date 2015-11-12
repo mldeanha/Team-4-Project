@@ -38,7 +38,7 @@ public class GameGUI extends JFrame implements ActionListener{
 	private Timer timer;
 	private Scanner scanner;
 	Scanner keyboard = new Scanner(System.in);
-	
+	private int score = 0;
 	
 	private int currentNumber = -1;
 
@@ -213,9 +213,14 @@ public class GameGUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == timer){ //This action performs at every timer tick
-			sendCommand("1");		//Command 1: Check for an update to the puzzle
 			String string = "";
 			String [] line;
+			sendCommand("2");		//Command 2: Update Score
+			string = string + scanner.nextLine();				
+			score = Integer.parseInt(string);
+			System.out.println(score);
+			string = "";
+			sendCommand("1");		//Command 1: Check for an update to the puzzle
 			string = string + scanner.nextLine();				
 			line = string.split(" ");
 			if(line.length == 81){ //if the input was the puzzle change the buttons

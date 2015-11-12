@@ -13,7 +13,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Client {
 	/**
@@ -27,7 +30,10 @@ public class Client {
 	public static void main(String[] args) {
 
 		String ip = JOptionPane.showInputDialog("Please enter server IP");
+		
+		//String name = JOptionPane.showInputDialog("Please enter server IP");
 
+		
 		int port = 7776;
 		Socket socket;
 
@@ -72,4 +78,5 @@ public class Client {
 		//				}
 
 	}
+	
 }

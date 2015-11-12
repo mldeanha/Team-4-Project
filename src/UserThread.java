@@ -25,6 +25,7 @@ public class UserThread extends Thread {
 	PrintWriter socketWriter;
 	Scanner scanner;
 	private String currentPuzzle;
+	private int score = 0;
 	/**
 	 * This is the constructor for the user thread in which
 	 * the socket and game are preserved to be used in run
@@ -66,11 +67,11 @@ public class UserThread extends Thread {
 				case 0:
 					if(userGame.checkInput(input)){
 						socketWriter.println("0");
-						//Change Server Puzzle Here!
+						score += 100;
 					}else{
 						socketWriter.println("1");
+						score -= 100;
 					}
-					socketWriter.flush();
 					break;
 				case 1://Get Puzzle
 					if(userGame.getPuzzle().equals(currentPuzzle)){ //if the puzzle hasn't changes don't send it
@@ -80,14 +81,18 @@ public class UserThread extends Thread {
 						socketWriter.println(userGame.getPuzzle());//If it's has changed
 						currentPuzzle = userGame.getPuzzle();
 					}
-					socketWriter.flush();
 
 					break;
+				case 2:
+					socketWriter.println(score);
+					break;
 				default:
+					socketWriter.println("Something went Wrong Command Not Valid");
 
 					break;	
 				}
-				
+				socketWriter.flush();
+
 			}
 			
 		} catch (Exception e) {

@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 /**
  * This class file will accept clients trying to connect to the 
  * sudoku game it will then make a new thread for the client user
@@ -21,31 +23,45 @@ public class SudokuPlusServer {
 	 */
 	@SuppressWarnings("resource")
 	public static void main(String[] args){
-		GameLogic game = new GameLogic(2);
 		
+		Object[] options = {"Easy",
+				"Medium",
+		"Hard"};
+		
+		int n = JOptionPane.showOptionDialog(null,
+				"Choose a Difficulty",
+				"Setup",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				options,
+				options[2]);
+		
+		GameLogic game = new GameLogic(n + 1);
+
 		int port = 7776;
 		ServerSocket serverSocket;
-		
+
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;	
 		}
-		
+
 		while (true) {
 			try {
 				Socket clientSocket = serverSocket.accept();
 
 				Thread customThread = new UserThread(clientSocket, game);
-				
+
 				customThread.start();
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	
+
+
 }

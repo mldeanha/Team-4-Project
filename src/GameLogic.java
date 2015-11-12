@@ -140,11 +140,7 @@ public class GameLogic {
 		}
 		//		System.out.println(guess);
 		//Returns true or false based off of guess accuracy
-//		System.out.println("Current:");
-//		System.out.println(currentPuzzle);
-//		System.out.println("\nSolution:");
-//		System.out.println(currentPuzzleSolution);
-		
+
 		return guess;
 	}
 
