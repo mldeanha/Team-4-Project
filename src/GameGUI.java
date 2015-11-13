@@ -25,6 +25,7 @@ public class GameGUI extends JFrame implements ActionListener{
 	private JPanel pick;
 	private JTextField field;
 	private JTextArea area;
+	private JLabel scoreLabel;
 
 	//MenuBar items
 	private JMenuBar menuBar;
@@ -77,6 +78,10 @@ public class GameGUI extends JFrame implements ActionListener{
 		//Build Panels
 		panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		//Score Label
+		scoreLabel = new JLabel();
+		scoreLabel.setFocusable(false);
 
 		//Button Grid
 		play = new JPanel(new GridLayout(9,9));
@@ -135,10 +140,12 @@ public class GameGUI extends JFrame implements ActionListener{
 
 		//Chat Window and Input field
 		field = new JTextField(20);
+		field.addActionListener(this);
 		area = new JTextArea(20,20);
 		area.setEditable(false);
 		area.setWrapStyleWord(true);
 		area.setBorder(BorderFactory.createLineBorder(Color.black));
+		//area.setMaximumSize(area.getSize()); 
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
@@ -157,11 +164,24 @@ public class GameGUI extends JFrame implements ActionListener{
 		c.gridx = 2;
 		c.gridy = 0;
 		c.gridwidth = 1;
-		c.gridheight = 2;
+		c.gridheight = 1;
 		c.fill = GridBagConstraints.BOTH;
 		c.ipadx = 20;
 		c.ipady = 20;
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
+		c.weightx = 0.5;
+		c.weighty = 1.0;
+		panel.add(scoreLabel, c);
+		
+		c = new GridBagConstraints();
+		c.gridx = 2;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		c.fill = GridBagConstraints.BOTH;
+		c.ipadx = 20;
+		c.ipady = 20;
+		c.anchor = GridBagConstraints.LINE_END;
 		c.weightx = 0.5;
 		c.weighty = 1.0;
 		panel.add(area, c);
@@ -195,7 +215,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		//Finish JFrame
 		frame.setJMenuBar(menuBar);
 		frame.add(panel);
-		frame.setMinimumSize(new Dimension(700, 450));
+		frame.setMinimumSize(new Dimension(700, 500));
 		frame.setVisible(true);
 		timer = new Timer(250, this);		
 		timer.setInitialDelay(0);
@@ -218,7 +238,7 @@ public class GameGUI extends JFrame implements ActionListener{
 			sendCommand("2");		//Command 2: Update Score
 			string = string + scanner.nextLine();				
 			score = Integer.parseInt(string);
-			System.out.println(score);
+			
 			string = "";
 			sendCommand("1");		//Command 1: Check for an update to the puzzle
 			string = string + scanner.nextLine();				
@@ -242,11 +262,12 @@ public class GameGUI extends JFrame implements ActionListener{
 			}else if(string.equals("true")){ //Win Condition
 				System.out.println("Game Over");
 				timer.stop();
-				JOptionPane.showMessageDialog(null, "WINNER!\n\nPlease relaunch the server and play again!");
+				JOptionPane.showMessageDialog(null, "WINNER!\n\nYour score was: "+ score +"\n\nPlease relaunch the server and play again!");
 				System.exit(1);
 				
 			}
-			area.setText(frame.getWidth() + ", " + frame.getHeight());//windowsize debug
+			//area.setText(frame.getWidth() + ", " + frame.getHeight());//windowsize debug
+			scoreLabel.setText("     Your score is: "+score);//Update player score
 		}
 		
 		if(e.getSource() == aboutMenuItem){ //This action performs the function of the About menubar item
@@ -256,11 +277,16 @@ public class GameGUI extends JFrame implements ActionListener{
 			return;
 		}
 		
+		if(e.getSource() == field){
+			area.setText(area.getText() + "\n" + field.getText());
+			field.setText("");
+			return;
+		}
+		
 		for(SButton check : buttonRow){		//This action listens for the user's use of the number selection row
 			
 			if(e.getSource() == check){
 				currentNumber = check.getValue();
-				field.setText("" + currentNumber);
 				for(SButton renew : buttonRow){
 					renew.setBackground(new Color(245,148,118));
 					check.setSelected(false);
