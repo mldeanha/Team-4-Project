@@ -40,6 +40,7 @@ public class GameGUI extends JFrame implements ActionListener{
 	private Scanner scanner;
 	Scanner keyboard = new Scanner(System.in);
 	private int score = 0;
+	private String playerName;
 	
 	private int currentNumber = -1;
 
@@ -217,6 +218,10 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame.add(panel);
 		frame.setMinimumSize(new Dimension(700, 500));
 		frame.setVisible(true);
+		
+		playerName = JOptionPane.showInputDialog("Please enter a username:");
+		
+		//Start Timer
 		timer = new Timer(250, this);		
 		timer.setInitialDelay(0);
 		timer.start();
@@ -267,7 +272,7 @@ public class GameGUI extends JFrame implements ActionListener{
 				
 			}
 			//area.setText(frame.getWidth() + ", " + frame.getHeight());//windowsize debug
-			scoreLabel.setText("     Your score is: "+score);//Update player score
+			scoreLabel.setText("     " + playerName + ", your score is: "+score);//Update player score
 		}
 		
 		if(e.getSource() == aboutMenuItem){ //This action performs the function of the About menubar item
