@@ -294,6 +294,16 @@ public class GameGUI extends JFrame implements ActionListener{
 				check.setSelected(true);
 				check.setBackground(new Color(169,169,169));
 				
+				for(SButton[] row : buttonGrid){
+					for(SButton highlight : row){
+						
+						highlight.setBackground(new Color(249,241,220));
+						if(highlight.getValue()==check.getValue()){
+							highlight.setBackground(new Color(135,206,250));
+						}
+					}
+				}
+				
 				return;
 			}
 		}
