@@ -9,6 +9,7 @@
  *
  */
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
@@ -24,6 +25,7 @@ public class UserThread extends Thread {
 	private Socket clientSocket;
 	PrintWriter socketWriter;
 	Scanner scanner;
+	private String name = "";
 	private String currentPuzzle;
 	private int score = 0;
 	/**
@@ -38,8 +40,7 @@ public class UserThread extends Thread {
 		this.clientSocket = client;
 		this.userGame = game;
 		socketWriter = new PrintWriter(clientSocket.getOutputStream());
-
-		System.out.println("Client " + clientSocket.getInetAddress() + " connected");	}
+		System.out.println("Client: " + " - "+clientSocket.getInetAddress() + " connected");	}
 	
 	/**
 	 * This method is used to send data to and from the
@@ -86,9 +87,13 @@ public class UserThread extends Thread {
 				case 2:
 					socketWriter.println(score);
 					break;
+				case 3:
+					for(int e = 1; e < split.length; e++){
+						name = name +split[e]; 
+					}
+					break;
 				default:
 					socketWriter.println("Something went Wrong Command Not Valid");
-
 					break;	
 				}
 				socketWriter.flush();

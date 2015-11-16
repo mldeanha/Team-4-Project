@@ -31,8 +31,20 @@ public class Client {
 
 		String ip = JOptionPane.showInputDialog("Please enter server IP");
 		
-		//String name = JOptionPane.showInputDialog("Please enter server IP");
-
+		//String name = JOptionPane.showInputDialog("Please enter Your name");
+		
+		Object[] options = {"Easy",
+				"Medium",
+		"Hard"};
+		
+		int n = JOptionPane.showOptionDialog(null,
+				"Choose a Difficulty",
+				"Setup",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				options,
+				options[2]);
 		
 		int port = 7776;
 		Socket socket;
@@ -44,17 +56,6 @@ public class Client {
 			JOptionPane.showMessageDialog(null,"Failed to connect to server");
 			return;
 		}
-
-		PrintWriter socketWriter;
-		try {
-			socketWriter = new PrintWriter(socket.getOutputStream());
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Failed to attach printwriter to socket!");
-			e.printStackTrace();
-			return;
-		}
-
-		//Ask for a puzzle to do
 		Scanner scanner = null;
 		try {
 
@@ -64,19 +65,15 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			PrintWriter w = new PrintWriter(socket.getOutputStream());
+			w.println(n);
+			w.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		new GameGUI(socket);
-		//this is how to write to the server
-		//				while(true){
-
-		//					
-		//					String command = JOptionPane.showInputDialog("Please enter a command");
-		//					socketWriter.println(command);
-		//					socketWriter.flush();
-		//					while(true){
-		//						System.out.println(scanner.nextLine());
-		//					}
-		//				}
-
 	}
 	
 }
