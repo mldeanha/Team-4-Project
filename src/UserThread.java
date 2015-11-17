@@ -92,6 +92,9 @@ public class UserThread extends Thread {
 						name = name +split[e]; 
 					}
 					break;
+				case 4:
+					socketWriter.println(userGame.getTime());
+					break;
 				default:
 					socketWriter.println("Something went Wrong Command Not Valid");
 					break;	

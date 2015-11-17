@@ -1,5 +1,9 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
+
+import javax.swing.Timer;
 
 /**
  * This class handles all of the game logic that
@@ -10,7 +14,7 @@ import java.util.*;
  * Class: CS3141 - Team Software Project
  *
  */
-public class GameLogic {
+public class GameLogic implements ActionListener {
 
 	//CONTAINS 3 VALUES: [Input Value, Coordinate X, Coordinate Y]
 	int[] userInputDataPosition;
@@ -30,17 +34,24 @@ public class GameLogic {
 	//This boolean will translate whether or not the user has completed the puzzle
 	boolean completed;
 
+	Timer timer;
+	int time = 0;
 
 	public GameLogic(){
 
 	}
 	public GameLogic(int diff){
 		setDifficulty(diff);
+		
 		try {
 			readPuzzle();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
+		timer = new Timer(1000, this);		
+		timer.setInitialDelay(0);
+		timer.start();		
 	}
 	//	//MAIN METHOD
 	//	public static void main(String[] args)
@@ -346,5 +357,14 @@ public class GameLogic {
 			return true;
 		}
 		return false;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == timer){
+			time++;
+		}
+	}
+	public int getTime(){
+		return time;		
 	}
 }

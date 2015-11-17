@@ -25,7 +25,7 @@ public class GameGUI extends JFrame implements ActionListener{
 	private JPanel pick;
 	private JTextField field;
 	private JTextArea area;
-	private JLabel scoreLabel;
+	private JLabel infoLabel;
 
 	//MenuBar items
 	private JMenuBar menuBar;
@@ -39,7 +39,9 @@ public class GameGUI extends JFrame implements ActionListener{
 	private Timer timer;
 	private Scanner scanner;
 	Scanner keyboard = new Scanner(System.in);
-	private int score = 0;
+	private int Score = 0;
+	private String Time = "";
+
 	private String playerName;
 	
 	private int currentNumber = -1;
@@ -81,9 +83,11 @@ public class GameGUI extends JFrame implements ActionListener{
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		//Score Label
-		scoreLabel = new JLabel();
-		scoreLabel.setFocusable(false);
-
+		infoLabel = new JLabel();
+		infoLabel.setFocusable(false);
+		//Timer Label
+		infoLabel = new JLabel();
+		infoLabel.setFocusable(false);
 		//Button Grid
 		play = new JPanel(new GridLayout(9,9));
 		play.setSize(400, 400);
@@ -171,9 +175,10 @@ public class GameGUI extends JFrame implements ActionListener{
 		c.ipady = 20;
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
 		c.weightx = 0.5;
-		c.weighty = 1.0;
-		panel.add(scoreLabel, c);
+		c.weighty = .05;
+		panel.add(infoLabel, c);
 		
+
 		c = new GridBagConstraints();
 		c.gridx = 2;
 		c.gridy = 1;
@@ -238,12 +243,19 @@ public class GameGUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == timer){ //This action performs at every timer tick
+			int time = 0;
+			sendCommand("4");
+			time = Integer.parseInt(scanner.nextLine());
+			updateTimer(time);
+			
+			
 			String string = "";
 			String [] line;
 			sendCommand("2");		//Command 2: Update Score
 			string = string + scanner.nextLine();				
-			score = Integer.parseInt(string);
-			
+			Score = Integer.parseInt(string);
+			updateLabel();
+
 			string = "";
 			sendCommand("1");		//Command 1: Check for an update to the puzzle
 			string = string + scanner.nextLine();				
@@ -267,12 +279,12 @@ public class GameGUI extends JFrame implements ActionListener{
 			}else if(string.equals("true")){ //Win Condition
 				System.out.println("Game Over");
 				timer.stop();
-				JOptionPane.showMessageDialog(null, "WINNER!\n\nYour score was: "+ score +"\n\nPlease relaunch the server and play again!");
+				JOptionPane.showMessageDialog(null, "WINNER!\n\nYour score was: "+ Score +"\n\nPlease relaunch the server and play again!");
 				System.exit(1);
 				
 			}
 			//area.setText(frame.getWidth() + ", " + frame.getHeight());//windowsize debug
-			scoreLabel.setText("     " + playerName + ", your score is: "+score);//Update player score
+			//infoLabel.setText("     " + playerName + ", your score is: "+Score);//Update player score
 		}
 		
 		if(e.getSource() == aboutMenuItem){ //This action performs the function of the About menubar item
@@ -355,7 +367,18 @@ public class GameGUI extends JFrame implements ActionListener{
 		
 	} //End ActionListener
 	
+	public void updateLabel(){
+		infoLabel.setText(playerName+"'s Score: " + Score + "      Timer: " + Time);
+	}
 	
+	private void updateTimer(int total) {
+		int hours = total / 3600;
+		int minutes = (total % 3600) / 60;
+		int seconds = total % 60;
+		Time = hours + " : " + minutes + " : " + seconds;
+		updateLabel();
+	}
+
 	/**
 	 * Command input method that sends commands through
 	 * the user thread to the server.
