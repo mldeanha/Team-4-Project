@@ -58,13 +58,11 @@ public class GameGUI extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 
-		//this.writer = writer;
 		
 		//Build Jframe
 		frame = new JFrame("SudokuPlus");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
-		//frame.setLayout(new GridLayout());
 
 		//Build Menu
 		menuBar = new JMenuBar();
@@ -231,6 +229,9 @@ public class GameGUI extends JFrame implements ActionListener{
 		timer = new Timer(250, this);		
 		timer.setInitialDelay(0);
 		timer.start();
+		
+		//Initialize name for server
+		sendCommand("3 " + username);
 	}
 
 	/**

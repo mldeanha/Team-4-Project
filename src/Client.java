@@ -68,6 +68,8 @@ public class Client {
 		try {
 			PrintWriter w = new PrintWriter(socket.getOutputStream());
 			w.println(n);
+			w.flush();		
+			w.println("3 Eric Celerin");
 			w.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
