@@ -222,6 +222,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame.setJMenuBar(menuBar);
 		frame.add(panel);
 		frame.setMinimumSize(new Dimension(700, 500));
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
 		playerName = username;

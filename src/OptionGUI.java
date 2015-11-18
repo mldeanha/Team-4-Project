@@ -34,10 +34,10 @@ public class OptionGUI extends JFrame implements ActionListener{
 	public OptionGUI(){
 		frame = new JFrame("Opening Options");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(400, 400);
+		frame.setSize(400, 200);
 		frame.setAlwaysOnTop(true);
-		frame.setMaximumSize(frame.getSize());
-		frame.setMinimumSize(frame.getSize());
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		
 		panel = new JPanel();
 		
@@ -46,13 +46,10 @@ public class OptionGUI extends JFrame implements ActionListener{
 		
 		easy = new JRadioButton("Easy");
 		easy.setSelected(true);
-		//easy.addActionListener(this);
 		
 		medium = new JRadioButton("Medium");
-		//medium.addActionListener(this);
 		
 		hard = new JRadioButton("Hard");
-		//hard.addActionListener(this);
 		
 		group = new ButtonGroup();
 		group.add(easy);
@@ -72,7 +69,6 @@ public class OptionGUI extends JFrame implements ActionListener{
 		
 		usernameField = new JTextField();
 		usernameField.setPreferredSize(new Dimension(300, 20));
-		//usernameField.addActionListener(this);
 		panel.add(usernameField);
 		
 		label = new JLabel("Please enter an IP address to connect to:");
@@ -80,7 +76,6 @@ public class OptionGUI extends JFrame implements ActionListener{
 		
 		ipField = new JTextField();
 		ipField.setPreferredSize(new Dimension(300, 20));
-		//ipField.addActionListener(this);
 		panel.add(ipField);
 		
 		cancel = new JButton("Cancel");
@@ -117,9 +112,9 @@ public class OptionGUI extends JFrame implements ActionListener{
 			
 			ipAddr = ipField.getText();
 			
-			if( hard.isSelected() ) difficulty = 3;
-			else if( medium.isSelected() ) difficulty = 2;
-			else difficulty = 1;
+			if( hard.isSelected() ) difficulty = 2;
+			else if( medium.isSelected() ) difficulty = 1;
+			else difficulty = 0;
 			
 			int port = 7776;
 			Socket socket;
