@@ -73,7 +73,7 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		new GameGUI(socket);
+		new GameGUI(socket, null);
 	}
 	
 }

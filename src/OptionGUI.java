@@ -2,6 +2,10 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -24,6 +28,8 @@ public class OptionGUI extends JFrame implements ActionListener{
 	private JButton submit;
 	
 	private String username;
+	private String ipAddr;
+	private int difficulty;
 	
 	public OptionGUI(){
 		frame = new JFrame("Opening Options");
@@ -40,13 +46,13 @@ public class OptionGUI extends JFrame implements ActionListener{
 		
 		easy = new JRadioButton("Easy");
 		easy.setSelected(true);
-		easy.addActionListener(this);
+		//easy.addActionListener(this);
 		
 		medium = new JRadioButton("Medium");
-		medium.addActionListener(this);
+		//medium.addActionListener(this);
 		
 		hard = new JRadioButton("Hard");
-		hard.addActionListener(this);
+		//hard.addActionListener(this);
 		
 		group = new ButtonGroup();
 		group.add(easy);
@@ -66,7 +72,7 @@ public class OptionGUI extends JFrame implements ActionListener{
 		
 		usernameField = new JTextField();
 		usernameField.setPreferredSize(new Dimension(300, 20));
-		usernameField.addActionListener(this);
+		//usernameField.addActionListener(this);
 		panel.add(usernameField);
 		
 		label = new JLabel("Please enter an IP address to connect to:");
@@ -74,7 +80,7 @@ public class OptionGUI extends JFrame implements ActionListener{
 		
 		ipField = new JTextField();
 		ipField.setPreferredSize(new Dimension(300, 20));
-		ipField.addActionListener(this);
+		//ipField.addActionListener(this);
 		panel.add(ipField);
 		
 		cancel = new JButton("Cancel");
@@ -96,9 +102,58 @@ public class OptionGUI extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		if(e.getSource() == cancel){
+			System.exit(0);
+		}
+		
+		if(e.getSource() == submit){
+			username = usernameField.getText();
+			
+			if(username.equals(null) || username.equals("")) {
+				JOptionPane.showMessageDialog(null, "You must enter a username.");
+				return;
+			}
+			
+			ipAddr = ipField.getText();
+			
+			if( hard.isSelected() ) difficulty = 3;
+			else if( medium.isSelected() ) difficulty = 2;
+			else difficulty = 1;
+			
+			int port = 7776;
+			Socket socket;
+
+			try {
+				socket = new Socket(ipAddr, port);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				JOptionPane.showMessageDialog(null,"Failed to connect to server");
+				return;
+			}
+			Scanner scanner = null;
+			try {
+
+				scanner = new Scanner(socket.getInputStream());
+
+			} catch (IOException ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			}
+			try {
+				PrintWriter w = new PrintWriter(socket.getOutputStream());
+				w.println(difficulty);
+				w.flush();
+			} catch (IOException ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			}
+			new GameGUI(socket, username);
+			frame.dispose();
+		}
 		
 	}
+
 
 	public static void main(String[] args){
 		OptionGUI opt = new OptionGUI();
