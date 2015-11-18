@@ -11,6 +11,13 @@ public class GameLogicTester {
 	//----------TEST 1----------
 	//This test method will test the user checking method that we will use
 	//to tell the user if the number they guess was correct or not.
+	//
+	//NOTE: The way this test is constructed, it generates 3 numbers randomly and then uses
+	//the appropriate methods to see if that number exists at the coordinates. Due to the nature of this,
+	//the numbers it's trying to guess will never be in the puzzle's solution. This means that it will fail
+	//the tests, but the way they're written, a fail of the tests means that it passes.
+	//
+	//THIS METHOD WILL RUN 10 TIMES
 	public void test1() throws FileNotFoundException {
 
 		GameLogic test = new GameLogic();
@@ -50,6 +57,14 @@ public class GameLogicTester {
 	//----------Test 2----------
 	//This method is going to test to make sure
 	//the difficulty is being set correctly.
+	//
+	//This method generates a random number (1,2 or 3) and then sets it and then checks if the newly
+	//set difficulty variable is equal to the number it generated prior. 
+	//
+	//This is an effective test because it tests the get/setDifficulty methods one after the other.
+	//So if either of these were to fail, it wouldn't produce the correct result and fail the JUnit tests.
+	//
+	//THIS METHOD WILL RUN 10 TIMES.
 	public void test2(){
 
 		GameLogic test = new GameLogic();
@@ -58,6 +73,8 @@ public class GameLogicTester {
 
 		int i=0;
 		while(i<10){
+
+			//Randomly generates a difficulty integer and then checks if it's a valid choice and sets it.
 
 			int generatedDifficulty = rand.nextInt((3-1)+1)+1;
 
@@ -85,6 +102,8 @@ public class GameLogicTester {
 	//If at any point it were to return true, and then fail the tests, there would be an issue with our isComplete method.
 	//
 	//NOTE: The assertion here should be false and in being false, it should pass the tests.
+	//
+	//THIS METHOD WILL RUN 10 TIMES
 	public void test3(){
 
 		GameLogic test = new GameLogic();

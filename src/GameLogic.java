@@ -17,32 +17,36 @@ import javax.swing.Timer;
 public class GameLogic implements ActionListener {
 
 	//CONTAINS 3 VALUES: [Input Value, Coordinate X, Coordinate Y]
-	int[] userInputDataPosition;
+	private int[] userInputDataPosition;
 
 	//Boolean tells the server whether or not the input was correct or not
-	boolean guessVariable;
+	private boolean guessVariable;
 
 	//Contains all of the values of the current puzzle stored in an array.
-	String[][] currentPuzzle = new String[9][9];
+	private String[][] currentPuzzle = new String[9][9];
 
 	//Contains all of the values of the current puzzle's solution.
-	String[][] currentPuzzleSolution = new String[9][9];
+	private String[][] currentPuzzleSolution = new String[9][9];
 
 	//Integer (1,2 or 3) that sets the difficulty of the puzzle.
-	int difficulty;
+	private int difficulty;
 
 	//This boolean will translate whether or not the user has completed the puzzle
-	boolean completed;
+	private boolean completed;
 
-	Timer timer;
-	int time = 0;
+	//These are the variables that establish our timer which is vital to the updating of our online game.
+	private Timer timer;
+	private int time = 0;
 
 	public GameLogic(){
 
 	}
+
+	//Constructor with a difficulty parameter. This will be used later when the user selects the difficulty when he/she
+	//starts up the server.
 	public GameLogic(int diff){
 		setDifficulty(diff);
-		
+
 		try {
 			readPuzzle();
 		} catch (FileNotFoundException e) {
@@ -53,6 +57,7 @@ public class GameLogic implements ActionListener {
 		timer.setInitialDelay(0);
 		timer.start();		
 	}
+
 	//	//MAIN METHOD
 	//	public static void main(String[] args)
 	//	{
@@ -110,6 +115,7 @@ public class GameLogic implements ActionListener {
 	//		System.out.println(tester.checkInput(guess3));
 	//	}
 	//
+
 	/**
 	 * WORKING AS OF 10/22/15
 	 * 
@@ -136,9 +142,6 @@ public class GameLogic implements ActionListener {
 		int input = userGuess[1];
 		int guessY = userGuess[2];
 		int guessX = userGuess[3];
-		//		System.out.println("in" +input);
-		//		System.out.println("x" +guessY);
-		//		System.out.println("y" +guessX);
 
 		//Pulls out the number (in the form of a string) and converts it to an int
 		String correctNumber = currentPuzzleSolution[guessX][guessY];
@@ -149,9 +152,8 @@ public class GameLogic implements ActionListener {
 			guess = true;
 			currentPuzzle[guessX][guessY] = "" + input;
 		}
-		//		System.out.println(guess);
-		//Returns true or false based off of guess accuracy
 
+		//Returns true or false based off of guess accuracy
 		return guess;
 	}
 
@@ -166,7 +168,13 @@ public class GameLogic implements ActionListener {
 		String singleString = "";
 		for(int i = 0; i < 9; i++){
 			for(int k = 0; k < 9; k++){
+
+				//This chunk of code is when we convert it from current puzzle into a long list of the numbers
+				//in the puzzle
 				singleString = singleString + currentPuzzle[i][k];
+
+				//This method is where it tests if the loops have reached the end.
+				//If it hasn't, it adds a space in between successive numbers.
 				if(i * k != 64){
 					singleString = singleString + " ";
 				}
@@ -204,10 +212,12 @@ public class GameLogic implements ActionListener {
 	 */
 	public void setDifficulty(int desiredDifficulty){
 
+		//Makes sure the input numbers for easy, medium, hard are 1,2 or 3.
 		if(desiredDifficulty == 1 || desiredDifficulty == 2 || desiredDifficulty == 3){
 			difficulty = desiredDifficulty;
 		}
 
+		//Throws error if the input isn't 1,2, or 3.
 		else{
 			System.out.println("INCORRECT INPUT. INPUT MUST BE 1 (EASY), 2 (MEDIUM), OR 3 (HARD)!");
 		}
@@ -332,6 +342,9 @@ public class GameLogic implements ActionListener {
 	 */
 	public boolean isComplete(){
 
+		//Checks if currentPuzzle == currentPuzzleSolution.
+		//The reason we can make such a comparison is because every correct move
+		//updates the currentPuzzle array.
 		if(Arrays.deepEquals(currentPuzzle, currentPuzzleSolution)){
 			return true;
 		}
@@ -342,6 +355,9 @@ public class GameLogic implements ActionListener {
 	}
 
 	/**
+	 * 
+	 * WORKING AS OF 11/18/15
+	 * 
 	 * This method is strictly for testing purposes. It will have the same logic as 
 	 * isComplete, except it will have parameters. We don't have a method that can be used
 	 * to set the puzzle, so in order to test it from a separate class, we need this method.
@@ -349,21 +365,37 @@ public class GameLogic implements ActionListener {
 	 * @param puzzleOne - The randomly generated puzzle
 	 * @param puzzleTwo - The solution to the puzzle that is retrieved from getPuzzleSolution
 	 * 
-	 * @return true/false based off of 
+	 * @return true/false based off of equality.
 	 */
 	public boolean isCompleteTest(String[][] puzzleOne,String[][] puzzleTwo){
 
-		if(puzzleOne.equals(puzzleTwo)){
+		if(Arrays.deepEquals(puzzleOne, puzzleTwo)){
 			return true;
 		}
 		return false;
 	}
-	@Override
+
+	/**
+	 * 
+	 * WORKING AS OF 11/18/15
+	 * 
+	 * This method just increments the timer each timer pings.
+	 * This is used in the application to keep a running time total.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == timer){
 			time++;
 		}
 	}
+
+	/**
+	 * 
+	 * WORKING AS OF 11/18/15
+	 * 
+	 * This method just returns the total time that is generated from the server run time.
+	 * 
+	 * @return time (the total that is generated from the actionPerformed method)
+	 */
 	public int getTime(){
 		return time;		
 	}
