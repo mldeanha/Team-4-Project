@@ -49,7 +49,7 @@ public class GameGUI extends JFrame implements ActionListener{
 	/**
 	 * Constructor class for GameGUI
 	 */
-	public GameGUI(Socket socket){
+	public GameGUI(Socket socket, String username){
 		try {
 			writer = new PrintWriter(socket.getOutputStream());
 			scanner = new Scanner(socket.getInputStream());
@@ -224,7 +224,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame.setMinimumSize(new Dimension(700, 500));
 		frame.setVisible(true);
 		
-		playerName = JOptionPane.showInputDialog("Please enter a username:");
+		playerName = username;
 		
 		//Start Timer
 		timer = new Timer(250, this);		
