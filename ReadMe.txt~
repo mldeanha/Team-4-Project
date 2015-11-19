@@ -64,6 +64,24 @@ If either of the people playing make a move, it will update their correct guess 
 
 -------------------------------------------------
 
+UPDATE 3 - 11/19/15
 
+As of Sprint 3, this project is nearing completion and is currently at a spot where the only issues are small bugs. When you boot up the game, you'll notice a timer. This isn't the
+time you've been playing the game, but rather, the time the server as been running for, so don't get that confused. Up in that corner too, you'll see a score. If you guess a number and it's incorrect, 100 will be deducted from your total, but if you correctly guess a number, 100 will be added.
 
+*****UPDATE THIS ONCE WE HAVE THE EXECUTABLES. MENTION HOW TO RUN.***** 
+
+The instructions of the game are the same as usual, but now that it's in a finished state, here are the rules for those who don't know:
+
+1.) Numbers can only appear once (and only once) in each row.
+2.) Numbers can only appear once (and only once) in each column.
+3.) Numbers can only appear once (and only once) in each 3x3 square.
+
+If you make a correct guess, the board will update and your number will appear like the others.
+If you make an incorrect guess, the square will turn red, indicating that the guess is incorrect.
+Score will be updated accordingly.
+
+And that's it!
+
+UPDATE 2 explains what some of the buttons do, so check there if there are any unanswered questions.
 
