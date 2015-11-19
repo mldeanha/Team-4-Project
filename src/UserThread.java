@@ -87,7 +87,7 @@ public class UserThread extends Thread {
 					if(userGame.getPuzzle().equals(currentPuzzle)){ //if the puzzle hasn't changes don't send it
 						socketWriter.println(userGame.isComplete());//Notifies that the puzzle is finished
 						//Implement findWinner()
-
+						
 						//Doesn't send full puzzle
 					}else{	//If it has changed send the updated puzzle
 						socketWriter.println(userGame.getPuzzle());

@@ -8,11 +8,9 @@ import java.util.Scanner;
 import javax.swing.*;
 
 /**
- * Class which contains the Graphical Use Interface for
+ * Class which contains the Graphical User Interface for
  * the Team 4 project SudokuPlus
  * 
- * 					Does it need to extend JFrame?
- * 					Do more research
  * @author Matt
  *
  */
@@ -122,7 +120,6 @@ public class GameGUI extends JFrame implements ActionListener{
 				
 			}
 		}
-		//play.setBackground(Color.BLACK);
 		play.setVisible(true);
 		
 		//Number Selection Row

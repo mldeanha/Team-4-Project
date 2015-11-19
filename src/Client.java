@@ -3,6 +3,8 @@
  * input of an ip address. Then it will create a GameGUI and pass it the socket and
  * possibly the sudoku puzzle
  * 
+ * THIS FILE IS OBSOLETE. RUN OptionGUI IF YOU WANT TO RUN THE CLIENT.
+ * 
  * @author Eric Celerin
  * Date: 10/20/15
  * Class: CS3141 - Team Software Project
