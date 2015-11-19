@@ -62,7 +62,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 
-		//Build Menu
+		//Build Menu (may need to add more than an "About" menu)
 		menuBar = new JMenuBar();
 		menu = new JMenu("File");
 		menu.getAccessibleContext().setAccessibleDescription("Main Menu");
@@ -145,8 +145,9 @@ public class GameGUI extends JFrame implements ActionListener{
 		area.setEditable(false);
 		area.setWrapStyleWord(true);
 		area.setBorder(BorderFactory.createLineBorder(Color.black));
-		//area.setMaximumSize(area.getSize()); 
-		
+
+		// GRIDBAGLAYOUT CONSTRAINING
+		// VERITABLY REAL DELICATE STUFF
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
@@ -274,16 +275,15 @@ public class GameGUI extends JFrame implements ActionListener{
 					}
 					k++;
 				}	
-				//area.setText(string);//debug purposes
+
 			}else if(string.equals("true")){ //Win Condition
 				System.out.println("Game Over");
 				timer.stop();
-				JOptionPane.showMessageDialog(null, "WINNER!\n\nYour score was: "+ Score +"\n\nPlease relaunch the server and play again!");
+				JOptionPane.showMessageDialog(null, "WINNER!\n\nYour score was: "+ Score +"\n\nPlease relaunch the client for a different difficulty and play again!");
 				System.exit(1);
 				
 			}
-			//area.setText(frame.getWidth() + ", " + frame.getHeight());//windowsize debug
-			//infoLabel.setText("     " + playerName + ", your score is: "+Score);//Update player score
+
 		}
 		
 		if(e.getSource() == aboutMenuItem){ //This action performs the function of the About menubar item
@@ -366,10 +366,20 @@ public class GameGUI extends JFrame implements ActionListener{
 		
 	} //End ActionListener
 	
+	/**
+	 * Updates the Score-Timer label when called
+	 */
 	public void updateLabel(){
 		infoLabel.setText(playerName+"'s Score: " + Score + "      Timer: " + Time);
 	}
 	
+	/**
+	 * Splits the seconds the server has been on into
+	 * readable time and then updates the Score-Timer label
+	 * 
+	 * @param total 
+	 * 			Total time the server has been running
+	 */
 	private void updateTimer(int total) {
 		int hours = total / 3600;
 		int minutes = (total % 3600) / 60;

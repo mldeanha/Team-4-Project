@@ -130,7 +130,7 @@ public class OptionGUI extends JFrame implements ActionListener{
 		if(e.getSource() == submit){
 			username = usernameField.getText();
 			
-			if(username.equals(null) || username.equals("")) {
+			if(username.equals(null) || username.equals("")) {	//Fails to submit with bad username
 				JOptionPane.showMessageDialog(null, "You must enter a username.");
 				return;
 			}
