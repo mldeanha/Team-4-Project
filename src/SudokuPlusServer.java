@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
@@ -24,9 +25,9 @@ public class SudokuPlusServer {
 	 */
 	@SuppressWarnings("resource")
 	public static void main(String[] args){
-		
-		
-		
+
+
+
 		GameLogic easy = new GameLogic(1);
 		GameLogic medium = new GameLogic(2);
 		GameLogic hard = new GameLogic(3);
@@ -47,16 +48,29 @@ public class SudokuPlusServer {
 				Socket clientSocket = serverSocket.accept();
 				Scanner scanner = new Scanner(clientSocket.getInputStream());
 				int Diff = Integer.parseInt(scanner.nextLine());
-				Thread customThread = null;
+				UserThread customThread = null;
+
 				switch(Diff){
 				case 0:
+					if(easy.isComplete()){
+						easy = new GameLogic(1);
+					}
 					customThread = new UserThread(clientSocket, easy);
+					easy.addPlayer(customThread);
 					break;
 				case 1:
+					if(medium.isComplete()){
+						medium = new GameLogic(2);
+					}
 					customThread = new UserThread(clientSocket, medium);
+					medium.addPlayer(customThread);
 					break;
 				case 2:
+					if(hard.isComplete()){
+						hard = new GameLogic(3);
+					}
 					customThread = new UserThread(clientSocket, hard);
+					hard.addPlayer(customThread);
 					break;
 				default:
 					break;

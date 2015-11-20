@@ -37,13 +37,13 @@ public class GameLogic implements ActionListener {
 	//These are the variables that establish our timer which is vital to the updating of our online game.
 	private Timer timer;
 	private int time = 0;
-
-	public GameLogic(){
-
-	}
+	
+	private ArrayList<UserThread> currentPlayers = new ArrayList<UserThread>();
 
 	//Constructor with a difficulty parameter. This will be used later when the user selects the difficulty when he/she
 	//starts up the server.
+	public GameLogic(){}
+
 	public GameLogic(int diff){
 		setDifficulty(diff);
 
@@ -57,7 +57,12 @@ public class GameLogic implements ActionListener {
 		timer.setInitialDelay(0);
 		timer.start();		
 	}
-
+	
+	public void addPlayer(UserThread person){
+		currentPlayers.add(person);
+	}
+	
+	
 	//	//MAIN METHOD
 	//	public static void main(String[] args)
 	//	{
@@ -398,5 +403,26 @@ public class GameLogic implements ActionListener {
 	 */
 	public int getTime(){
 		return time;		
+	}
+	/**
+	 * 
+	 * WORKING AS OF 11/21/15
+	 * 
+	 * This method finds who won the game
+	 * 
+	 * @return winner.getPlayerName() (the total that is generated from the actionPerformed method)
+	 */
+	public String findWinner(){
+		UserThread winner = null;
+
+		winner = currentPlayers.get(0);
+
+		for(UserThread current : currentPlayers){
+			if(current.getScore() > winner.getScore()){
+				winner = current;
+			}
+		}
+
+		return winner.getPlayerName();
 	}
 }

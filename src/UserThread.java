@@ -86,8 +86,10 @@ public class UserThread extends Thread {
 				case 1:		//Get Puzzle
 					if(userGame.getPuzzle().equals(currentPuzzle)){ //if the puzzle hasn't changes don't send it
 						socketWriter.println(userGame.isComplete());//Notifies that the puzzle is finished
-						//Implement findWinner()
-						
+						socketWriter.flush();
+						if(userGame.isComplete()){
+							socketWriter.println(userGame.findWinner());
+						}
 						//Doesn't send full puzzle
 					}else{	//If it has changed send the updated puzzle
 						socketWriter.println(userGame.getPuzzle());
@@ -116,5 +118,10 @@ public class UserThread extends Thread {
 			System.out.println("User disconnected");
 		}
 	}
-
+	public int getScore(){
+		return score;
+	}
+	public String getPlayerName(){
+		return name;
+	}
 }

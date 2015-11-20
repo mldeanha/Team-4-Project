@@ -41,7 +41,7 @@ public class GameGUI extends JFrame implements ActionListener{
 	private String Time = "";
 
 	private String playerName;
-	
+
 	private int currentNumber = -1;
 
 	/**
@@ -56,7 +56,6 @@ public class GameGUI extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 
-		
 		//Build Jframe
 		frame = new JFrame("SudokuPlus");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +76,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		//Build Panels
 		panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 		//Score Label
 		infoLabel = new JLabel();
 		infoLabel.setFocusable(false);
@@ -117,11 +116,11 @@ public class GameGUI extends JFrame implements ActionListener{
 				bottom = 1;
 				right = 1;
 
-				
+
 			}
 		}
 		play.setVisible(true);
-		
+
 		//Number Selection Row
 		pick = new JPanel();
 		pick.setSize(400,200);
@@ -160,7 +159,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		c.weightx = 1.0;
 		c.weighty = 1.0;
 		panel.add(play, c);
-		
+
 		c = new GridBagConstraints();
 		c.gridx = 2;
 		c.gridy = 0;
@@ -173,7 +172,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		c.weightx = 0.5;
 		c.weighty = .05;
 		panel.add(infoLabel, c);
-		
+
 
 		c = new GridBagConstraints();
 		c.gridx = 2;
@@ -187,7 +186,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		c.weightx = 0.5;
 		c.weighty = 1.0;
 		panel.add(area, c);
-		
+
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 2;
@@ -199,7 +198,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		c.anchor = GridBagConstraints.LAST_LINE_START;
 		c.weightx = 1.0;
 		panel.add(pick, c);
-		
+
 		c = new GridBagConstraints();
 		c.gridx = 2;
 		c.gridy = 2;
@@ -220,16 +219,17 @@ public class GameGUI extends JFrame implements ActionListener{
 		frame.setMinimumSize(new Dimension(700, 500));
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		
+
 		playerName = username;
-		
+
 		//Start Timer
 		timer = new Timer(250, this);		
 		timer.setInitialDelay(0);
 		timer.start();
-		
+
 		//Initialize name for server
 		sendCommand("3 " + username);
+
 	}
 
 	/**
@@ -241,14 +241,14 @@ public class GameGUI extends JFrame implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if(e.getSource() == timer){ //This action performs at every timer tick
 			int time = 0;
 			sendCommand("4");
 			time = Integer.parseInt(scanner.nextLine());
 			updateTimer(time);
-			
-			
+
+
 			String string = "";
 			String [] line;
 			sendCommand("2");		//Command 2: Update Score
@@ -261,7 +261,7 @@ public class GameGUI extends JFrame implements ActionListener{
 			string = string + scanner.nextLine();				
 			line = string.split(" ");
 			if(line.length == 81){ //if the input was the puzzle change the buttons
-				
+
 				for(int i = 0, k = 0; i < 81; i++){
 					if(k == 9){
 						k = 0;
@@ -277,30 +277,40 @@ public class GameGUI extends JFrame implements ActionListener{
 				}	
 
 			}else if(string.equals("true")){ //Win Condition
-				System.out.println("Game Over");
+				String winner = scanner.nextLine();
 				timer.stop();
-				JOptionPane.showMessageDialog(null, "WINNER!\n\nYour score was: "+ Score +"\n\nPlease relaunch the client for a different difficulty and play again!");
-				System.exit(1);
-				
+				int n = JOptionPane.showConfirmDialog( //This Asks the user if she/he wants to play again
+						frame,
+						"Game Over! " + winner + " Was the Winner!\n\nYour score was: "+ Score +
+						"\n\nRelaunch the client for a different difficulty and play again?",
+						"Game Over",
+						JOptionPane.YES_NO_OPTION);
+				if(n == 0){ //Launch a new Client
+					OptionGUI newGame = new OptionGUI();
+					frame.dispose();
+				}else{      //Exit
+					System.exit(1);
+				}
+
 			}
 
 		}
-		
+
 		if(e.getSource() == aboutMenuItem){ //This action performs the function of the About menubar item
 			JOptionPane.showMessageDialog(null, "SudokuPlus\nA Sudoku game for multiple people\n\n"
 					+ "Developed by:\n-Mitchell Baer     -Eric Celerin     -Matt Dean-Hall\n\nCreated 2015");
-			
+
 			return;
 		}
-		
+
 		if(e.getSource() == field){
 			area.setText(area.getText() + "\n" + field.getText());
 			field.setText("");
 			return;
 		}
-		
+
 		for(SButton check : buttonRow){		//This action listens for the user's use of the number selection row
-			
+
 			if(e.getSource() == check){
 				currentNumber = check.getValue();
 				for(SButton renew : buttonRow){
@@ -309,49 +319,48 @@ public class GameGUI extends JFrame implements ActionListener{
 				}
 				check.setSelected(true);
 				check.setBackground(new Color(169,169,169));
-				
+
 				for(SButton[] row : buttonGrid){
 					for(SButton highlight : row){
-						
+
 						highlight.setBackground(new Color(249,241,220));
 						if(highlight.getValue()==check.getValue()){
 							highlight.setBackground(new Color(135,206,250));
 						}
 					}
 				}
-				
+
 				return;
 			}
 		}
-		
-		
+
+
 		for(SButton[] current : buttonGrid){	//This action listens for the user's use of a main grid button
 			for(SButton check : current){
 				if(e.getSource() == check){
-				
+
 					if(currentNumber < 0 && !check.valueAndDisplayEqual()){
 						JOptionPane.showMessageDialog(this,"Please Select a Number for the Cell.");
 						return;
-				}else if (check.getValue() < 0){
-						
-					
+					}else if (check.getValue() < 0){
+
+
 						sendCommand("0 "+currentNumber + " " + check.getYCoord() + " " + check.getXCoord());	//Command 0: Send the selected box to the server
 						String string = "";
 						string = string + scanner.nextLine();						
 						check.setDisplayValue(currentNumber);
 						if(string.equals("0")){
-							//check.setEnabled(false);
 							check.setBackground(new Color(249,241,220));
 						}else{
 							check.setForeground(new Color(100,0,0));
 							check.setBackground(new Color(225,0,0));
 						}
-						
+
 						return;
 					}else{
 						for(SButton[] row : buttonGrid){
 							for(SButton highlight : row){
-								
+
 								highlight.setBackground(new Color(249,241,220));
 								if(highlight.getValue()==check.getValue()){
 									highlight.setBackground(new Color(135,206,250));
@@ -359,20 +368,20 @@ public class GameGUI extends JFrame implements ActionListener{
 							}
 						}
 					}
-					
+
 				}
 			}
 		} //End ButtonGrid Check
-		
+
 	} //End ActionListener
-	
+
 	/**
 	 * Updates the Score-Timer label when called
 	 */
 	public void updateLabel(){
 		infoLabel.setText(playerName+"'s Score: " + Score + "      Timer: " + Time);
 	}
-	
+
 	/**
 	 * Splits the seconds the server has been on into
 	 * readable time and then updates the Score-Timer label
