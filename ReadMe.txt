@@ -69,9 +69,16 @@ UPDATE 3 - 11/19/15
 As of Sprint 3, this project is nearing completion and is currently at a spot where the only issues are small bugs. When you boot up the game, you'll notice a timer. This isn't the
 time you've been playing the game, but rather, the time the server as been running for, so don't get that confused. Up in that corner too, you'll see a score. If you guess a number and it's incorrect, 100 will be deducted from your total, but if you correctly guess a number, 100 will be added.
 
-*****UPDATE THIS ONCE WE HAVE THE EXECUTABLES. MENTION HOW TO RUN.***** 
+As of 11/20/15, the only way to run our application is still ugly, but in the next week, we're planning on making it into an executable, but until then the way  to run it
+is as follows:
 
-The instructions of the game are the same as usual, but now that it's in a finished state, here are the rules for those who don't know:
+1.) Run the SudokuPlusServer.java on the PC you want to run the server on.
+2.) Run OptionGUI.java (this is the new file to run in place of Client.java)
+3.) Select difficulty, type in a username, and type in the server ip. (IMPORTANT: The IP you type in is the IP of the computer that is running the server.)
+3.5) If you're planning on playing the game and hosting the server on the same computer, you need to leave the IP field blank and just hit submit. Everything else still applies (username/difficulty).
+4.) Win!
+
+The instructions of the game are the same as usual, but now that the application is in a finished state, here are the rules for those who don't know:
 
 1.) Numbers can only appear once (and only once) in each row.
 2.) Numbers can only appear once (and only once) in each column.
@@ -83,5 +90,11 @@ Score will be updated accordingly.
 
 And that's it!
 
-UPDATE 2 explains what some of the buttons do, so check there if there are any unanswered questions.
+Some other things to note:
+
+-When you select a number on the bottom, all of the numbers in the puzzle should highlight blue indicating their locations.
+-You can also select the number in the puzzle itself, and it will do the same thing.
+-If you look in the top corner and select the dropdown menu, there is an about page that has all of our names as well as some other information.
+-The text box isn't working, so no messages can be sent between users.
+
 
