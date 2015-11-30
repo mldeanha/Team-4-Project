@@ -26,6 +26,7 @@ public class UserThread extends Thread {
 	private PrintWriter socketWriter;
 	private Scanner scanner;
 	private String name = "";
+	private String textInput = "";
 	private String currentPuzzle;
 	private int score = 0;
 	/**
@@ -59,18 +60,31 @@ public class UserThread extends Thread {
 				String[] split = line.split(" ");
 				int [] input = new int[split.length];
 				int i = 0;
-				
-				if(!split[0].equals("3")){//This will deal with an attempt to convert strings to integer error
-					
+
+				if(split[0].equals("3")){//This will deal with an attempt to convert strings to integer error
+					input[0] = 3;
+					for(int h = 1;h < split.length; h++){
+						textInput = textInput + split[h];
+						if(h < split.length -1){
+							textInput = textInput + " ";
+						}
+					}
+				}else if(split[0].equals("5")){ //This case will be used for chat
+					input[0] = 5;					
+					textInput = "";
+					for(int h = 1;h < split.length; h++){
+						textInput = textInput + split[h];
+						if(h < split.length -1){
+							textInput = textInput + " ";
+						}
+					}
+				}else{
 					for(String convert : split){			 //This will convert from strings to integers so we can read 
 						input[i] = Integer.parseInt(convert);//commands and input from user
 						i++;
 					}
-					
-				}else{
-					input[0] = 3;
 				}
-				
+
 				//Command directory: This is what will convert actions in the GUI
 				//into game changes and server interactions
 				switch(input[0]){
@@ -100,12 +114,16 @@ public class UserThread extends Thread {
 					socketWriter.println(score);
 					break;
 				case 3:		//Set Name				
-					for(int e = 1; e < split.length; e++){
-						name = name +split[e]; 
-					}
+					name = textInput;
 					continue;//Fixes not return flush error
 				case 4:		//Get Timer update
 					socketWriter.println(userGame.getTime());
+					break;
+				case 5:
+					if(textInput != ""){
+						userGame.chatSend(getPlayerName() + ": " + textInput);
+					}
+					socketWriter.println(userGame.getChat());
 					break;
 				default:	
 					socketWriter.println("Something went Wrong Command Not Valid");
@@ -113,7 +131,6 @@ public class UserThread extends Thread {
 				}
 				socketWriter.flush();//This part returns the response to the command
 			}
-
 		} catch (Exception e) {
 			System.out.println("User disconnected");
 		}

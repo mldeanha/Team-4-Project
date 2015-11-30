@@ -25,7 +25,7 @@ public class SudokuPlusServer {
 	 */
 	@SuppressWarnings("resource")
 	public static void main(String[] args){
-
+		
 
 
 		GameLogic easy = new GameLogic(1);

@@ -38,6 +38,8 @@ public class GameLogic implements ActionListener {
 	private Timer timer;
 	private int time = 0;
 	
+	private String chatText = "";
+	
 	private ArrayList<UserThread> currentPlayers = new ArrayList<UserThread>();
 
 	//Constructor with a difficulty parameter. This will be used later when the user selects the difficulty when he/she
@@ -424,5 +426,15 @@ public class GameLogic implements ActionListener {
 		}
 
 		return winner.getPlayerName();
+	}
+	public void chatSend(String Line){
+		if(chatText == ""){
+			chatText = Line;
+		}else{
+			chatText = chatText + "~" + Line;
+		}
+	}
+	public String getChat(){
+		return chatText;
 	}
 }

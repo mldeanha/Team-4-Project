@@ -151,23 +151,12 @@ public class OptionGUI extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null,"Failed to connect to server");
 				return;
 			}
-			
-/*			Scanner scanner = null;
-			try {
-
-				scanner = new Scanner(socket.getInputStream());
-
-			} catch (IOException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
-			}
-*/			
+		
 			try {
 				PrintWriter w = new PrintWriter(socket.getOutputStream());
 				w.println(difficulty);
 				w.flush();
 			} catch (IOException ex) {
-				// TODO Auto-generated catch block
 				ex.printStackTrace();
 			}
 			new GameGUI(socket, username);

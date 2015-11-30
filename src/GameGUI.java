@@ -144,6 +144,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		area.setEditable(false);
 		area.setWrapStyleWord(true);
 		area.setBorder(BorderFactory.createLineBorder(Color.black));
+		JScrollPane scroller = new JScrollPane(area); 
 
 		// GRIDBAGLAYOUT CONSTRAINING
 		// VERITABLY REAL DELICATE STUFF
@@ -185,7 +186,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		c.anchor = GridBagConstraints.LINE_END;
 		c.weightx = 0.5;
 		c.weighty = 1.0;
-		panel.add(area, c);
+		panel.add(scroller, c);
 
 		c = new GridBagConstraints();
 		c.gridx = 0;
@@ -248,6 +249,8 @@ public class GameGUI extends JFrame implements ActionListener{
 			time = Integer.parseInt(scanner.nextLine());
 			updateTimer(time);
 
+			sendCommand("5");
+			updateChat();
 
 			String string = "";
 			String [] line;
@@ -286,9 +289,10 @@ public class GameGUI extends JFrame implements ActionListener{
 						"Game Over",
 						JOptionPane.YES_NO_OPTION);
 				if(n == 0){ //Launch a new Client
-					OptionGUI newGame = new OptionGUI();
 					frame.dispose();
+					OptionGUI newGame = new OptionGUI();
 				}else{      //Exit
+					frame.dispose();
 					System.exit(1);
 				}
 
@@ -304,7 +308,8 @@ public class GameGUI extends JFrame implements ActionListener{
 		}
 
 		if(e.getSource() == field){
-			area.setText(area.getText() + "\n" + field.getText());
+			sendCommand("5 " + field.getText());//area.setText( area.getText() + "\n" + playerName + ": "+ field.getText());
+			updateChat();
 			field.setText("");
 			return;
 		}
@@ -345,7 +350,7 @@ public class GameGUI extends JFrame implements ActionListener{
 					}else if (check.getValue() < 0){
 
 
-						sendCommand("0 "+currentNumber + " " + check.getYCoord() + " " + check.getXCoord());	//Command 0: Send the selected box to the server
+						sendCommand("0 " + currentNumber + " " + check.getYCoord() + " " + check.getXCoord());	//Command 0: Send the selected box to the server
 						String string = "";
 						string = string + scanner.nextLine();						
 						check.setDisplayValue(currentNumber);
@@ -374,10 +379,21 @@ public class GameGUI extends JFrame implements ActionListener{
 		} //End ButtonGrid Check
 
 	} //End ActionListener
-
 	/**
-	 * Updates the Score-Timer label when called
+	 * Updates the Chat TextArea when called
 	 */
+	public void updateChat(){
+		String reassemble = scanner.nextLine();
+		String [] textLines = reassemble.split("~");
+		String fieldText = textLines[0];
+		for(int q = 1; q < textLines.length; q++){
+			fieldText = fieldText + "\n" +textLines[q];			
+			//System.out.println(textLines[q]);
+
+		}
+		area.setText(fieldText);
+	}
+
 	public void updateLabel(){
 		infoLabel.setText(playerName+"'s Score: " + Score + "      Timer: " + Time);
 	}
@@ -390,10 +406,19 @@ public class GameGUI extends JFrame implements ActionListener{
 	 * 			Total time the server has been running
 	 */
 	private void updateTimer(int total) {
-		int hours = total / 3600;
-		int minutes = (total % 3600) / 60;
-		int seconds = total % 60;
-		Time = hours + " : " + minutes + " : " + seconds;
+		String hours = "" + total / 3600;
+		String minutes = "" + (total % 3600) / 60;
+		String seconds = "" + total % 60;
+		if(Integer.parseInt(hours) < 10){
+			hours = "0" + hours;
+		}
+		if(Integer.parseInt(minutes) < 10){
+			minutes = "0" + minutes;
+		}
+		if(Integer.parseInt(seconds) < 10){
+			seconds = "0" + seconds;
+		}
+		Time = hours + ":" + minutes + ":" + seconds;
 		updateLabel();
 	}
 
