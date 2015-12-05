@@ -245,11 +245,11 @@ public class GameGUI extends JFrame implements ActionListener{
 
 		if(e.getSource() == timer){ //This action performs at every timer tick
 			int time = 0;
-			sendCommand("4");
+			sendCommand("4");		//Command 4: Update Timer
 			time = Integer.parseInt(scanner.nextLine());
 			updateTimer(time);
 
-			sendCommand("5");
+			sendCommand("5");		//Command 5: Update Chat
 			updateChat();
 
 			String string = "";
@@ -265,7 +265,7 @@ public class GameGUI extends JFrame implements ActionListener{
 			line = string.split(" ");
 			if(line.length == 81){ //if the input was the puzzle change the buttons
 
-				for(int i = 0, k = 0; i < 81; i++){
+				for(int i = 0, k = 0; i < 81; i++){ //This will update Buttons
 					if(k == 9){
 						k = 0;
 					}
@@ -308,7 +308,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		}
 
 		if(e.getSource() == field){
-			sendCommand("5 " + field.getText());//area.setText( area.getText() + "\n" + playerName + ": "+ field.getText());
+			sendCommand("5 " + field.getText()); //Command 5: Sends Chat text
 			updateChat();
 			field.setText("");
 			return;
@@ -325,11 +325,11 @@ public class GameGUI extends JFrame implements ActionListener{
 				check.setSelected(true);
 				check.setBackground(new Color(169,169,169));
 
-				for(SButton[] row : buttonGrid){
+				for(SButton[] row : buttonGrid){ //This is the blue highlight feature
 					for(SButton highlight : row){
 
 						highlight.setBackground(new Color(249,241,220));
-						if(highlight.getValue()==check.getValue()){
+						if(highlight.getValue() == check.getValue()){
 							highlight.setBackground(new Color(135,206,250));
 						}
 					}
@@ -363,7 +363,7 @@ public class GameGUI extends JFrame implements ActionListener{
 
 						return;
 					}else{
-						for(SButton[] row : buttonGrid){
+						for(SButton[] row : buttonGrid){//Highlight buttons
 							for(SButton highlight : row){
 
 								highlight.setBackground(new Color(249,241,220));
@@ -388,12 +388,12 @@ public class GameGUI extends JFrame implements ActionListener{
 		String fieldText = textLines[0];
 		for(int q = 1; q < textLines.length; q++){
 			fieldText = fieldText + "\n" +textLines[q];			
-			//System.out.println(textLines[q]);
-
 		}
 		area.setText(fieldText);
 	}
-
+	/**
+	 * This method will update the timer label
+	 */
 	public void updateLabel(){
 		infoLabel.setText(playerName+"'s Score: " + Score + "      Timer: " + Time);
 	}

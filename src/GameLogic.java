@@ -64,64 +64,6 @@ public class GameLogic implements ActionListener {
 		currentPlayers.add(person);
 	}
 	
-	
-	//	//MAIN METHOD
-	//	public static void main(String[] args)
-	//	{
-	//
-	//		//JUST FOR TESTING. THERE WILL NOT BE A MAIN METHOD IN FUTURE VERSIONS
-	//		GameLogic tester = new GameLogic();
-	//		int[] guess = {8,5,6};
-	//		int[] guess2 = {4,8,8};
-	//		int[] guess3 = {4,0,2};
-	//		tester.setDifficulty(3);
-	//
-	//		try {
-	//			tester.readPuzzle();
-	//		} catch (FileNotFoundException e) {
-	//			e.printStackTrace();
-	//		}
-	//
-	//		//PRINTS OUT CURRENT PUZZLE
-	//		System.out.println("THE PUZZLE THE USER WILL WORK ON: ");
-	//		for(int i=0;i<9;i++){
-	//			for(int j=0;j<9;j++){
-	//				System.out.print(currentPuzzle[i][j]);
-	//			}
-	//			System.out.println();
-	//		}
-	//
-	//		//PRINTS A LINE
-	//		System.out.println();
-	//
-	//		//PRINTS OUT THE COORESPONDING SOLUTION
-	//		System.out.println("THE SOLUTION TO THE PUZZLE THE USER WILL WORK ON: ");
-	//		for(int i=0;i<9;i++){
-	//			for(int j=0;j<9;j++){
-	//				System.out.print(currentPuzzleSolution[i][j]);
-	//			}
-	//			System.out.println();
-	//		}
-	//
-	//		//PRINTS A LINE
-	//		System.out.println();
-	//
-	//		//TO CHECK THESE INPUTS YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!!
-	//		//GUESS 1
-	//		System.out.println("YOURE GUESSING THE NUMBER " + guess[0] + " IS AT: [" + guess[1] + "," + guess[2] + "]");
-	//		System.out.println(tester.checkInput(guess));
-	//		System.out.println();
-	//		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!!!!
-	//		//GUESS 2
-	//		System.out.println("YOURE GUESSING THE NUMBER " + guess2[0] + " IS AT: [" + guess2[1] + "," + guess2[2] + "]");
-	//		System.out.println(tester.checkInput(guess2));
-	//		System.out.println();
-	//		//TO CHECK THIS INPUT YOU HAVE TO GO ACROSS THEN DOWN!!!!!!
-	//		//GUESS 3
-	//		System.out.println("YOURE GUESSING THE NUMBER " + guess3[0] + " IS AT: [" + guess3[1] + "," + guess3[2] + "]");
-	//		System.out.println(tester.checkInput(guess3));
-	//	}
-	//
 
 	/**
 	 * WORKING AS OF 10/22/15
@@ -427,6 +369,11 @@ public class GameLogic implements ActionListener {
 
 		return winner.getPlayerName();
 	}
+	/**
+	 * This method will update the chat
+	 * 
+	 * @param Line - This is the new line being added to the chat
+	 */
 	public void chatSend(String Line){
 		if(chatText == ""){
 			chatText = Line;
@@ -434,6 +381,10 @@ public class GameLogic implements ActionListener {
 			chatText = chatText + "~" + Line;
 		}
 	}
+	/**
+	 * Send it to the UserThread
+	 * @return chatText - This is the entire chat text
+	 */
 	public String getChat(){
 		return chatText;
 	}

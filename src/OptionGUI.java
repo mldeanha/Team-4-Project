@@ -116,7 +116,10 @@ public class OptionGUI extends JFrame implements ActionListener{
 		frame.add(panel);
 		frame.setVisible(true);
 	}
-	
+	/**
+	 * This is the actions performed in the class so mostly
+	 * canceling and continuing to the game
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

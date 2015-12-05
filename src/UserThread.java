@@ -125,19 +125,27 @@ public class UserThread extends Thread {
 					}
 					socketWriter.println(userGame.getChat());
 					break;
-				default:	
+				default:	//This will occur if there is a wrong input
 					socketWriter.println("Something went Wrong Command Not Valid");
 					break;	
 				}
 				socketWriter.flush();//This part returns the response to the command
 			}
-		} catch (Exception e) {
+		} catch (Exception e) { //This will happen if there is a major error
 			System.out.println("User disconnected");
 		}
 	}
+	/**
+	 * Returns the score
+	 * @return score this is the player score
+	 */
 	public int getScore(){
 		return score;
 	}
+	/**
+	 * Returns the name of the player
+	 * @return name this is the name of the player
+	 */
 	public String getPlayerName(){
 		return name;
 	}
